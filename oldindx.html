@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>khz.am</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      color: #fff;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    a { color: #8cf; }
+    a:hover { color: #bef; }
+    .toast {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 9999;
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 14px 36px 14px 16px;
+      max-width: 320px;
+      font-size: 12px;
+      line-height: 1.4;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      transform: translateX(120%);
+      opacity: 0;
+      transition: transform 0.45s ease, opacity 0.35s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .toast .close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 4px;
+    }
+    .toast .close:hover { color: #fff; }
+
+    .header {
+      background: #000;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+    }
+    .header img.logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .header .clock {
+      font-size: 12px;
+      color: #888;
+    }
+    .header .utc {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+      margin-left: 6px;
+    }
+    .nav {
+      background: #0a0a0a;
+      border-bottom: 1px solid #222;
+      padding: 8px 24px;
+      font-size: 12px;
+    }
+    .nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 14px;
+    }
+    .nav a:hover { color: #fff; }
+    .nav a.active { color: #fff; font-weight: bold; }
+    .main {
+      padding: 20px 24px 40px;
+      min-height: calc(100vh - 130px);
+    }
+    .intro {
+      margin-bottom: 18px;
+      max-width: 720px;
+    }
+    .intro h1 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .intro p {
+      margin: 0 0 8px 0;
+      color: #ccc;
+    }
+    .note {
+      display: inline-block;
+      border: 1px solid #333;
+      background: #0a0a0a;
+      padding: 6px 12px;
+      font-size: 11px;
+      color: #aaa;
+    }
+    .controls {
+      border: 1px solid #222;
+      background: #0a0a0a;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+    }
+    .controls label {
+      font-weight: bold;
+      margin-right: 6px;
+      color: #ddd;
+    }
+    .controls input[type="text"],
+    .controls select {
+      font-family: Verdana, Arial, sans-serif;
+      font-size: 12px;
+      padding: 4px 6px;
+      border: 1px solid #333;
+      background: #000;
+      color: #fff;
+      margin-right: 16px;
+    }
+    .controls input[type="text"] { width: 240px; }
+    .controls input[type="text"]::placeholder { color: #666; }
+    .controls select option { background: #000; color: #fff; }
+    .controls .row { margin-bottom: 8px; }
+    .controls .row:last-child { margin-bottom: 0; }
+    .stats {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #888;
+    }
+    .stats b { color: #fff; }
+    .empty {
+      padding: 32px 16px;
+      color: #666;
+      border: 1px dashed #333;
+      background: #0a0a0a;
+      text-align: center;
+    }
+    .results {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #222;
+      background: #0a0a0a;
+    }
+    .results li {
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .results li:last-child { border-bottom: none; }
+    .results a {
+      display: block;
+      padding: 10px 14px;
+      color: #8cf;
+      text-decoration: none;
+    }
+    .results a:hover {
+      background: #111;
+      color: #bef;
+    }
+    .results .meta {
+      display: block;
+      font-size: 11px;
+      color: #777;
+      margin-top: 2px;
+    }
+    .results .freq {
+      font-family: "Courier New", Courier, monospace;
+      font-weight: bold;
+      color: #fff;
+    }
+    .footer {
+      border-top: 1px solid #222;
+      background: #000;
+      padding: 12px 24px;
+      font-size: 11px;
+      color: #555;
+      text-align: center;
+    }
+    #about h2 { color: #fff; }
+    #about p { color: #888; }
+  </style>
+</head>
+<body>
+  <div id="toast" class="toast">
+    <button type="button" class="close" id="toastClose" aria-label="Close">×</button>
+    Welcome to khz.am!
+  </div>
+
+  <div class="header">
+    <img src="logo.png" alt="khz.am" class="logo">
+    <div class="clock">UTC <span id="utc" class="utc">--:--:--</span></div>
+  </div>
+
+  <div class="nav">
+    <a href="index.html" class="active">Home</a>
+    <a href="#about">About</a>
+  </div>
+
+  <div class="main">
+    <div class="intro">
+      <h1>HF Utility &amp; Military Database</h1>
+      <p>
+        Directory of military, utility, and numbers stations in the HF spectrum (0–30 MHz).
+        Select a band or country, or search, to show links to station pages.
+      </p>
+      <div class="note">
+        Text here
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="row">
+        <label>Search:</label>
+        <input type="text" id="search" placeholder="frequency, name, keyword...">
+      </div>
+      <div class="row">
+        <label>Band:</label>
+        <select id="bandFilter">
+          <option value="">— select band —</option>
+          <option value="all">All bands</option>
+          <option value="lf-mf">LF / MF (&lt; 3 MHz)</option>
+          <option value="60m">~60m / 4–6 MHz</option>
+          <option value="40m">~40m / 6–8 MHz</option>
+          <option value="30m">~30m / 9–12 MHz</option>
+          <option value="20m">~20m / 12–16 MHz</option>
+          <option value="17m">~17m / 16–20 MHz</option>
+          <option value="15m">~15m / 20–25 MHz</option>
+        </select>
+        <label>Country / Region:</label>
+        <select id="countryFilter">
+          <option value="">— select —</option>
+          <option value="all">All</option>
+          <option value="USA">USA</option>
+          <option value="UK">UK</option>
+          <option value="Russia">Russia / CIS</option>
+          <option value="France">France</option>
+          <option value="Israel">Israel</option>
+          <option value="Canada">Canada</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="stats">Showing <b id="count">0</b> entries</div>
+    </div>
+
+    <div id="empty" class="empty">
+      Select a band or country, or type a search term to show station links.
+    </div>
+
+    <ul id="results" class="results" style="display:none;"></ul>
+
+    <div id="about" style="margin-top:36px; max-width:640px;">
+      <h2 style="font-size:14px; margin:0 0 8px 0;">About</h2>
+      <p style="margin:0; font-size:12px;">
+        Text goes here (i havent made an about section yet)
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    khz.am · 2026
+  </div>
+  <script>
+    (function() {
+      const toast = document.getElementById("toast");
+      const closeBtn = document.getElementById("toastClose");
+      let hideTimer;
+
+      function hideToast() {
+        toast.classList.remove("show");
+        clearTimeout(hideTimer);
+      }
+      setTimeout(function() {
+        toast.classList.add("show");
+        hideTimer = setTimeout(hideToast, 5000);
+      }, 200);
+
+      closeBtn.addEventListener("click", hideToast);
+    })();
+    let entries = [];
+    let currentBand = "";
+    let currentCountry = "";
+    let currentSearch = "";
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function hasFilter() {
+      return currentBand !== "" || currentCountry !== "" || currentSearch.trim() !== "";
+    }
+
+    function matches(entry, q) {
+      if (!q) return true;
+      q = q.toLowerCase();
+      return (
+        String(entry.freq).includes(q) ||
+        entry.name.toLowerCase().includes(q) ||
+        entry.country.toLowerCase().includes(q) ||
+        entry.mode.toLowerCase().includes(q) ||
+        entry.region.toLowerCase().includes(q) ||
+        entry.band.toLowerCase().includes(q) ||
+        (entry.kw1 && entry.kw1.toLowerCase().includes(q)) ||
+        (entry.kw2 && entry.kw2.toLowerCase().includes(q))
+      );
+    }
+
+    function render() {
+      const empty = document.getElementById("empty");
+      const list = document.getElementById("results");
+      const countEl = document.getElementById("count");
+
+      if (!hasFilter()) {
+        empty.style.display = "block";
+        list.style.display = "none";
+        list.innerHTML = "";
+        countEl.textContent = "0";
+        return;
+      }
+
+      let filtered = entries.slice();
+
+      if (currentBand && currentBand !== "all") {
+        filtered = filtered.filter(e => e.band === currentBand);
+      }
+      if (currentCountry && currentCountry !== "all") {
+        filtered = filtered.filter(e => e.region === currentCountry);
+      }
+      if (currentSearch.trim()) {
+        filtered = filtered.filter(e => matches(e, currentSearch.trim()));
+      }
+
+      filtered.sort((a, b) => a.freq - b.freq);
+
+      empty.style.display = "none";
+      list.style.display = "block";
+      list.innerHTML = "";
+
+      filtered.forEach(e => {
+        const li = document.createElement("li");
+        li.innerHTML =
+          '<a href="' + escapeHtml(e.page) + '">' +
+            '<span class="freq">' + e.freq + ' kHz</span> — ' + escapeHtml(e.name) +
+            '<span class="meta">' + escapeHtml(e.country) + ' · ' + escapeHtml(e.mode) + ' · ' + escapeHtml(e.band) + '</span>' +
+          '</a>';
+        list.appendChild(li);
+      });
+
+      countEl.textContent = filtered.length;
+    }
+
+    document.getElementById("search").addEventListener("input", function(e) {
+      currentSearch = e.target.value;
+      render();
+    });
+    document.getElementById("bandFilter").addEventListener("change", function(e) {
+      currentBand = e.target.value;
+      render();
+    });
+    document.getElementById("countryFilter").addEventListener("change", function(e) {
+      currentCountry = e.target.value;
+      render();
+    });
+
+    function updateUTC() {
+      const now = new Date();
+      const h = String(now.getUTCHours()).padStart(2, "0");
+      const m = String(now.getUTCMinutes()).padStart(2, "0");
+      const s = String(now.getUTCSeconds()).padStart(2, "0");
+      document.getElementById("utc").textContent = h + ":" + m + ":" + s;
+    }
+    fetch("stations.json")
+      .then(function(res) {
+        if (!res.ok) throw new Error("Failed to load stations.json");
+        return res.json();
+      })
+      .then(function(data) {
+        entries = data;
+        render();
+      })
+      .catch(function(err) {
+        document.getElementById("empty").textContent =
+          "Could not load stations.json — serve this site over HTTP (not file://).";
+        console.error(err);
+      });
+
+    updateUTC();
+    setInterval(updateUTC, 1000);
+  </script>
+</body>
+</html>
