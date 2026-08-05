@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Station Template</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    color:#eee;
+    font-family:"Sorts Mill Goudy", serif;
+}
+
+.header{
+    width:100%;
+    background:#8b0000;
+    padding:15px 0;
+    text-align:center;
+    border-bottom:1px solid #550000;
+}
+
+.header a{
+    color:white;
+    text-decoration:none;
+    font-size:24px;
+}
+
+.container{
+    max-width:950px;
+    margin:40px auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:35px;
+}
+
+.station{
+    display:flex;
+    gap:35px;
+    align-items:flex-start;
+}
+
+.info{
+    flex:1;
+    font-size:20px;
+    line-height:1.7;
+}
+
+.image{
+    width:320px;
+}
+
+.image img{
+    width:100%;
+    border:1px solid #444;
+}
+
+audio{
+    width:100%;
+    margin-top:12px;
+}
+
+.details{
+    margin-top:15px;
+    font-size:18px;
+}
+
+.details p{
+    margin:7px 0;
+}
+
+.paragraphs{
+    margin-top:35px;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.paragraphs p{
+    margin-bottom:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <a href="index.html">Home</a>
+</div>
+
+
+<div class="container">
+
+<h1>Station Title</h1>
+
+
+<div class="station">
+
+    <div class="info">
+
+        <p>
+            Short description of the radio station goes here.
+            Include what the station broadcasts, its purpose,
+            history, and other important information.
+        </p>
+
+    </div>
+
+
+    <div class="image">
+
+        <img src="station-image.png" alt="Station Image">
+
+
+        <audio controls>
+            <source src="station-audio.mp3" type="audio/mpeg">
+            Your browser does not support audio.
+        </audio>
+
+
+        <div class="details">
+
+            <p><strong>Country:</strong> Unknown</p>
+            <p><strong>Owner:</strong> Unknown</p>
+            <p><strong>Sister Station(s):</strong> None</p>
+            <p><strong>Callsign:</strong> Unknown</p>
+            <p><strong>Frequency:</strong> 0.000 MHz</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="paragraphs">
+
+<p>
+This is the first additional paragraph about the station.
+This area can be used for a detailed overview of the station,
+including its background, history, and purpose.
+</p>
+
+
+<p>
+This is the second additional paragraph. Add technical details
+such as modulation type, transmitter information, antenna setup,
+coverage area, schedules, or reception reports.
+</p>
+
+
+<p>
+This is the third additional paragraph. Use this section for
+extra notes, archives, recordings, signal reports, or any other
+information useful for listeners and researchers.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</body>
+</html>
