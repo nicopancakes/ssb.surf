@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DuckDrop - Send files the easy way</title>
+  <meta name="description" content="DuckDrop: Pure Python tool to create files, zip them and send to any API. Under 40 lines. Only requests needed.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-header: #0b1220;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Dosis', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      border-radius: 6px;
+    }
+
+    .github-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .github-btn:hover {
+      background: #1e293b;
+      border-color: var(--primary);
+    }
+
+    .github-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--text);
+    }
+
+    .github-btn:hover svg {
+      fill: var(--primary);
+    }
+
+    .hero {
+      position: relative;
+      padding: 100px 0 80px;
+      min-height: 580px;
+      background: 
+        linear-gradient(to right, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.5) 100%),
+        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1600&q=80') center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 640px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 5vw, 3.3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 70px;
+    }
+
+    .hero-feature h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .hero-feature p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .downloads {
+      padding: 80px 0 100px;
+      background: #0b1220;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+    }
+
+    .download-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1e293b;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 24px;
+      max-width: 640px;
+      gap: 20px;
+    }
+
+    .download-row-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .download-row-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .download-row h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .download-row p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-family: 'Dosis', sans-serif;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      background: #0b1220;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-features {
+        grid-template-columns: 1fr;
+      }
+      .download-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <img src="https://files.catbox.moe/6esfv5.png" alt="Logo">
+        </a>
+        <a href="https://github.com/API-Kitty/duckdrop/" class="github-btn" target="_blank" rel="noopener" title="View on GitHub">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Send files the easy way,<br>built by you</h1>
+          <p>
+            When you need to create files and send them as a zip to an API, 
+            DuckDrop does it in pure Python, and under 40 lines of code. 
+            Only the <strong>requests</strong> library required.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-features">
+        <div class="hero-feature">
+          <h4>Barely any Coding Experience needed</h4>
+          <p>Built in directing notes, making it easy to understand.</p>
+        </div>
+        <div class="hero-feature">
+          <h4>Only one library</h4>
+          <p>Just <code>requests.</code></p>
+        </div>
+        <div class="hero-feature">
+          <h4>Unlimited files</h4>
+          <p>Create as many files as you want in code.</p>
+        </div>
+        <div class="hero-feature">
+          <h4>Supports API, Webhook, and More.</h4>
+          <p>Built with anything, It probably is supported here. Discord, Vercel, Netlify, You name it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="downloads" id="downloads">
+    <div class="container">
+      <h2 class="section-title">Downloads</h2>
+      <p class="section-desc">Get the DuckDrop script and start sending files in seconds.</p>
+
+      <div class="download-row">
+        <div class="download-row-left">
+          <svg class="download-row-icon" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="40" height="40" fill="#00adef"/>
+            <rect x="48" y="0" width="40" height="40" fill="#00adef"/>
+            <rect x="0" y="48" width="40" height="40" fill="#00adef"/>
+            <rect x="48" y="48" width="40" height="40" fill="#00adef"/>
+          </svg>
+          <div>
+            <h3>DuckDrop Stable v2.7.2</h3>
+            <p>Download for Windows 10/11</p>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary">Download</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+    </div>
+  </footer>
+
+</body>
+</html>
