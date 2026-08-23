@@ -1,666 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="Learn about Radio, SDR, Line of Sight, Morse, and more!" name="description"/>
-<title>ssb.surf ~ What is Radio? Learning Radio for Newbies</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: #000008;
-    color: #e8e8e8;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 17px;
-    line-height: 1.75;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2.5rem 1.4rem 5rem;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: normal;
-    letter-spacing: 4px;
-    color: #fff;
-    margin-bottom: 0.2rem;
-  }
-
-  .subtitle {
-    color: #777;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    margin-bottom: 3rem;
-  }
-
-  h2 {
-    font-size: 1.35rem;
-    font-weight: normal;
-    color: #fff;
-    margin: 2.8rem 0 1rem;
-    border-bottom: 1px solid #333;
-    padding-bottom: 0.35rem;
-  }
-
-  p {
-    margin-bottom: 1.15rem;
-  }
-
-  a {
-    color: #a0c4ff;
-  }
-  a:hover {
-    color: #fff;
-  }
-
-  ul {
-    margin: 0.8rem 0 1.3rem 1.4rem;
-  }
-  li {
-    margin-bottom: 0.5rem;
-  }
-
-  footer {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #222;
-    color: #555;
-    font-size: 0.9rem;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ssb.surf LLC</title>
+  <meta name="description" content="ssb.surf LLC curated online SDRs, equipment sources, monitoring tools and propagation data for shortwave, HF and SSB.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-top">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button> 
 
-<h1>ssb.surf</h1>
-<p class="subtitle">Radio & More for Newbies</p>
+      <a href="/" class="logo">
+        <img src="https://files.catbox.moe/ivrf1s.png" alt="ssb.surf LLC" class="logo-img">
+      </a>
 
-<h2>What is Radio?</h2>
-<p>
-  Radio is the wireless transmission of information using electromagnetic waves that travel through space at the speed of light. A transmitter takes a signal such as a voice, music, data, or a simple tone and imposes it onto a carrier wave. A receiver in another location picks up that wave and converts it back into sound or usable data. This process allows messages to cross great distances without any connecting wires.
-</p>
-<p>
-  What makes radio different from most other communication technology is that it needs almost nothing between the sender and the receiver. There is no cable to run, no line of physical connection to maintain, and no infrastructure that can be cut or dug up. A signal simply radiates outward from an antenna and spreads through the air, the ground, or even space, until something on the other end is tuned to the right frequency to catch it. This is part of why radio has remained so useful for over a hundred years, even as newer technologies like the internet and mobile networks have taken over many everyday communication tasks.
-</p>
-<p>
-  For a newcomer, the most important thing to understand is that "radio" is not one single thing, it is a whole category of technology. AM and FM broadcast stations are radio. Walkie-talkies are radio. Wi-Fi and Bluetooth are technically radio too, just using much higher frequencies and different rules. Ham radio operators, ships at sea, aircraft pilots, weather satellites, and even garage door openers all rely on the same basic principle of turning information into electromagnetic waves and back again. Learning radio means learning how that principle gets applied differently across a huge range of situations, and that is exactly what this guide is here to help you explore.
-</p>
+      <div class="header-right">
 
-<h2>Radio Frequency (RF)</h2>
-<p>
-  Frequency describes how many times a radio wave completes a full cycle in one second. It is measured in hertz (Hz). One hertz equals one cycle per second. Because radio frequencies are high, we use larger units for convenience. One kilohertz (kHz) equals 1,000 hertz. One megahertz (MHz) equals 1,000,000 hertz. One gigahertz (GHz) equals 1,000,000,000 hertz.
-</p>
-<p>
-  Understanding frequency is the single most important building block for making sense of the rest of this guide, because almost everything in radio is organized around it. A station's "frequency" is simply the number that tells your radio where to tune. AM broadcast stations sit in the range of hundreds of kilohertz, FM broadcast stations sit around 100 megahertz, and satellite communications can climb into the gigahertz range. The higher the frequency, the more cycles per second the wave completes, and the shorter its wavelength becomes, which affects how far it travels and how it behaves along the way.
-</p>
-<p>
-  Most of the radio activity that beginners explore falls between a few hundred kilohertz and a few hundred megahertz. This is a genuinely enormous range of technology to explore even before going any higher. It covers medium-wave AM stations, shortwave broadcasters from other countries, aircraft and marine communications, ham radio's most popular bands, and the FM broadcast band most people already listen to in a car. New listeners often start by simply scanning across this range with an inexpensive receiver just to hear what is actually out there, and the sheer variety of voices, tones, and signals is usually what hooks people on the hobby in the first place.
-</p>
+      </div>
+    </div>
 
-<h2>The Electromagnetic Spectrum</h2>
-<p>
-  The electromagnetic spectrum includes every type of electromagnetic radiation, arranged by frequency. Radio waves sit at the low-frequency end. As frequency increases, the spectrum moves through microwaves, infrared, visible light, ultraviolet, X-rays, and finally gamma rays. All of these are the same basic phenomenon, differing only in frequency and wavelength.
-</p>
-<p>
-  It can help to picture the entire spectrum as one long ruler, with radio waves occupying the widest and lowest section of it. Visible light, the small sliver of the spectrum your eyes can detect, sits much further up. X-rays and gamma rays, which carry enough energy to pass through soft tissue or damage cells, sit at the very top. Radio waves, by contrast, are low-energy and generally harmless at the power levels used for everyday communication, which is one reason they have been safe to use so widely for so long.
-</p>
-<p>
-  Radio is simply the portion of the spectrum that is practical for long-distance communication with ordinary equipment. Unlike visible light, radio waves can pass through walls, travel over the horizon, bounce off layers of the atmosphere, and cover distances of hundreds or even thousands of miles depending on conditions. That combination of low energy and long reach is exactly why it became the backbone of broadcasting, navigation, aviation, maritime safety, and two-way communication long before satellites or fiber optic cables existed, and why it remains essential even today as a backup when other systems fail.
-</p>
-<h2>Frequency Bands</h2>
-<p>
-  The radio spectrum is divided into named bands so people can talk about ranges of frequencies easily. Low Frequency (LF) covers 30 to 300 kHz and is used for longwave broadcasting and some navigation systems. Medium Frequency (MF) runs from 300 kHz to 3 MHz and includes the AM broadcast band. High Frequency (HF) spans 3 to 30 MHz and is home to shortwave broadcasting and much of amateur radio.
-</p>
-<p>
-  Very High Frequency (VHF) covers 30 to 300 MHz and includes FM radio, aviation, and marine communications. Ultra High Frequency (UHF) runs from 300 MHz to 3 GHz and is used for television, mobile phones, and many amateur signals. Super High Frequency (SHF) covers 3 to 30 GHz and is used for satellites, radar, and microwave links. Each of these bands has its own personality in terms of how signals travel, how much equipment costs, and what kind of activity you will find there.
-</p>
-<p>
-  For a beginner, these band names show up constantly in radio conversation, so it is worth getting comfortable with the abbreviations early. When someone says they made a contact "on 20 metres" they are talking about a specific slice of the HF band. When someone mentions "2 metres" they mean a popular VHF amateur band. Knowing which named band a frequency falls into instantly tells you roughly how far a signal might travel, what kind of antenna you would need, and what time of day or season might be best for listening, which is why these divisions are one of the first things worth memorizing.
-</p>
-
-<h2>Wavelength</h2>
-<p>
-  Wavelength is the physical distance between one peak of a radio wave and the next. Frequency and wavelength are linked by a simple relationship. Wavelength in metres is approximately 300 divided by the frequency in megahertz. A signal at 10 MHz has a wavelength of about 30 metres. A signal at 150 MHz has a wavelength of about 2 metres.
-</p>
-<p>
-  This relationship is not just a piece of trivia, it directly shapes the physical world of radio equipment. Lower frequencies have longer wavelengths, which means the antennas needed to work efficiently on those frequencies also tend to be longer, sometimes tens of metres from end to end. Higher frequencies have short wavelengths, so antennas for VHF and UHF can be small enough to fit on a handheld radio or a car roof. This is part of why AM broadcast towers are often hundreds of feet tall, while a Wi-Fi antenna can be a few centimetres long.
-</p>
-<p>
-  Antenna size is closely related to wavelength, which is why lower-frequency antennas are usually larger than higher-frequency ones. This is often the very first practical tradeoff a new radio hobbyist runs into. Someone wanting to talk around the world on HF frequencies needs to find space for a fairly large antenna, while someone chatting on a local VHF repeater can get away with a small antenna on a portable handheld radio. Understanding wavelength helps explain almost every physical design choice you will see in radio equipment, from the length of a car's antenna to the size of a satellite dish.
-</p>
-
-<h2>Propagation</h2>
-<p>
-  Propagation is the way radio waves travel from a transmitter to a receiver. The path a signal takes depends on its frequency, the time of day, the season, and conditions in the atmosphere and ionosphere. Some signals follow the ground. Others bounce off layers high above the Earth. Still others travel in straight lines and stop at the horizon.
-</p>
-<p>
-  This variety is part of what makes radio endlessly interesting rather than predictable. The same transmitter, on the same frequency, can sound completely different to the same listener depending on whether it is broadcasting at noon or at midnight, in summer or in winter, or during a period of high or low solar activity. Experienced listeners learn to treat propagation almost like weather, something you can generally forecast and understand the patterns of, but which still surprises you regularly with unexpected openings or sudden fade outs.
-</p>
-<p>
-  Understanding basic propagation helps you know when and where to listen for different kinds of signals. A newcomer who understands even the basics of ground wave, skywave, and line-of-sight propagation will save themselves a lot of confusion, because it explains why a distant AM station suddenly appears at night, why shortwave bands seem to "open up" at certain hours, and why a VHF handheld radio might work fine across town but not at all across a hill. The next few sections walk through each of these propagation types in more detail.
-</p>
-
-<h2>Ground Wave</h2>
-<p>
-  Ground wave propagation occurs when radio waves follow the curve of the Earth's surface. This mode works best at lower frequencies such as LF and MF. It is the main way AM broadcast stations are heard during the day, since the ground itself helps guide the wave along instead of letting it travel off in a straight line into space.
-</p>
-<p>
-  Ground wave signals travel farther over water than over dry land, and farther still over salt water than fresh water, because salt water conducts electricity extremely well and supports the wave more efficiently. This is one reason coastal AM stations and maritime radio services have historically relied so heavily on ground wave propagation, and why certain frequencies were specifically chosen for services that needed dependable coverage over the ocean.
-</p>
-<p>
-  The range of ground wave propagation is limited compared with skywave, typically reaching anywhere from a few dozen to a couple hundred miles depending on power, terrain, and frequency, but the signal tends to be stable and reliable within its coverage area. For a beginner, this is the simplest and most predictable form of propagation to understand, and it explains why your local AM station comes in clearly and consistently during the daytime no matter what the ionosphere is doing overhead.
-</p>
-
-<h2>Skywave</h2>
-<p>
-  Skywave propagation happens when HF radio waves are bent back toward Earth by the ionosphere. A signal can leave one continent, reflect off the upper atmosphere, and arrive on another continent. Multiple hops between the ionosphere and the ground are possible, with a signal bouncing back down, reflecting off the Earth's surface, and heading back up again several times before it is finally received.
-</p>
-<p>
-  This is why shortwave radio has long been used for international broadcasting, maritime traffic, and amateur radio contacts across oceans. Before satellites and undersea cables made global communication easy, skywave propagation on HF frequencies was often the only practical way to send a message across an ocean in real time, and it remains a fascinating and still very active part of the hobby today. A new listener with a modest shortwave receiver can often hear stations from other continents purely because of this bending effect.
-</p>
-<p>
-  Skywave conditions change throughout the day and with the seasons, and they are also heavily influenced by solar activity, which is covered in more detail later in this guide. Lower HF frequencies tend to work better at night, while higher HF frequencies often perform best during daylight hours. This constantly shifting behavior is part of what draws people into shortwave listening and HF amateur radio, since no two evenings on the bands ever sound quite the same.
-</p>
-
-<h2>Line-of-Sight</h2>
-<p>
-  At VHF and UHF frequencies, radio waves usually travel in straight lines. They do not bend easily around the Earth or bounce off the ionosphere under normal conditions. Reliable communication normally requires a clear or nearly clear path between the two stations, which is why these frequencies behave much more like a beam of light than the bending, hopping signals found on HF.
-</p>
-<p>
-  Hills, buildings, and the curve of the Earth can block the signal, so two handheld radios on the ground might only reach each other over a mile or two, even though the same radios could reach much farther if elevated. This is why height matters so much for VHF and UHF work. Placing an antenna on a hilltop, a tall building, or a mountain dramatically increases the usable range simply because it extends how far the straight line can reach before the horizon gets in the way.
-</p>
-<p>
-  Repeaters placed on high towers or mountains are often used to extend the range of VHF and UHF stations. A repeater listens on one frequency and instantly retransmits on another from a high, well-placed location, letting two low-power handheld radios communicate across a much larger area than they could directly. For newcomers to VHF and UHF, learning to use local repeaters is usually one of the first practical skills picked up after getting licensed.
-</p>
-
-<h2>The Ionosphere</h2>
-<p>
-  The ionosphere is a region of the upper atmosphere that contains layers of electrically charged particles. The main layers are called D, E, and F. These layers are created by sunlight stripping electrons from atoms high above the Earth, and their behavior directly controls how far and how well HF radio signals can travel at any given moment.
-</p>
-<p>
-  The D layer appears mainly during the day and absorbs lower HF frequencies, which is one reason lower shortwave bands often go quiet during daylight hours and come alive again after sunset once the D layer fades away. The E layer can support shorter-distance skip contacts, especially in summer, occasionally producing surprising bursts of activity on frequencies that are normally used for local line-of-sight communication.
-</p>
-<p>
-  The F layer is the most important for long-distance HF communication and often splits into F1 and F2 during daylight hours. It is the F layer that is mainly responsible for the long skywave hops described earlier in this guide, bending signals back down to Earth from hundreds or even thousands of miles away. These layers grow stronger and weaker with sunlight and solar activity, which means the personality of the HF bands genuinely changes with the time of day, the season, and the point in the solar cycle, something every HF operator eventually learns to watch closely.
-</p>
-
-<h2>Sunspots and Solar Activity</h2>
-<p>
-  The Sun goes through an approximately 11-year cycle of activity marked by the number of sunspots on its surface. Sunspots are cooler, darker regions associated with intense magnetic activity, and their numbers rise and fall in a fairly regular pattern that scientists and radio operators alike track closely for very different reasons.
-</p>
-<p>
-  Higher sunspot numbers generally improve HF radio conditions, especially on the higher bands, because increased solar activity strengthens the ionosphere and allows it to reflect higher frequencies that would otherwise pass straight through into space. During a solar maximum, HF bands that are normally quiet can open up with strong signals from around the world, while during a solar minimum those same bands can feel almost dead in comparison.
-</p>
-<p>
-  Solar flares and large eruptions of material from the Sun can cause sudden radio blackouts or geomagnetic storms. These events sometimes disrupt communications for hours or days, particularly on the sunlit side of the Earth, catching operators off guard in the middle of a contact. At other times they can create unusual propagation paths that allow contacts that are not normally possible, which is part of why many HF operators keep an eye on space weather reports the same way a sailor keeps an eye on ocean weather.
-</p>
-
-<h2>Modulation Basics</h2>
-<p>
-  A pure radio carrier wave carries no information by itself, it is simply a steady oscillation at a fixed frequency. Modulation is the process of changing one or more properties of that carrier so it can carry a voice, music, or data. Without this step, a receiver would just hear a silent tone, or nothing at all, no matter how strong the signal was.
-</p>
-<p>
-  The most common properties that are changed are amplitude, frequency, and phase. Changing the amplitude, or strength, of the wave in step with an audio signal is what produces AM. Changing the frequency instead produces FM. More advanced schemes shift the phase of the wave or combine multiple properties at once to pack in more information, which is how many digital modes work.
-</p>
-<p>
-  Different modulation methods have different strengths and are chosen according to the job they need to do. Some are simple and cheap to build equipment for, some resist noise better, some use less bandwidth, and some are more efficient with the transmitter's power. Understanding modulation is the key to understanding why a radio has a mode selector at all, and why the next few sections on AM, FM, SSB, CW, and digital modes each sound and behave so differently from one another even though they are all just variations on the same basic carrier wave concept.
-</p>
-
-<h2>AM</h2>
-<p>
-  Amplitude Modulation, or AM, works by varying the strength of the carrier wave in time with the audio signal. It was one of the earliest methods used for voice transmission, dating back to the early twentieth century, and its relative simplicity made it the natural choice for the first generation of broadcast radio.
-</p>
-<p>
-  AM is still used for medium-wave broadcasting and aviation communications today. It is relatively simple but is more easily affected by noise and interference than some other modes, because most electrical noise, from lightning to household appliances, also shows up as unwanted changes in amplitude, and a simple AM receiver cannot easily tell the difference between real audio and that noise.
-</p>
-<p>
-  When you listen to a local AM radio station you are hearing amplitude modulation, often on a receiver that has changed very little in basic principle for decades. For a beginner, AM is a great starting point precisely because it is simple to understand and simple to receive, and it remains the standard for a few important applications, aviation being the most notable, where its particular characteristics turn out to be a real safety advantage rather than a limitation.
-</p>
-
-<h2>FM</h2>
-<p>
-  Frequency Modulation, or FM, works by varying the frequency of the carrier while keeping its strength constant. Instead of making the wave louder or quieter to represent sound, FM speeds up and slows down the rate of the wave's oscillation slightly, and the receiver decodes those tiny frequency shifts back into audio.
-</p>
-<p>
-  FM is much more resistant to amplitude noise such as static crashes or electrical interference, because most of that noise affects the strength of a signal rather than its frequency, and an FM receiver largely ignores strength variations by design. This single property is the main reason FM sounds so much cleaner than AM, especially near thunderstorms or electrical equipment that would otherwise cause loud pops and crackles.
-</p>
-<p>
-  This is why FM became the standard for VHF broadcast radio and for many VHF and UHF communication systems, including most ham radio repeaters, public safety radios, and countless other services. The clean sound of FM broadcast stations is a direct result of this noise resistance, and it is one of the clearest, most immediately noticeable differences a beginner will hear when switching between AM and FM on the same receiver.
-</p>
-
-<h2>SSB (USB and LSB)</h2>
-<p>
-  Single Sideband is a more efficient form of amplitude modulation. When a carrier is modulated with AM, the resulting signal actually contains the carrier itself plus two mirror-image copies of the audio, called sidebands, one above and one below the carrier frequency. In SSB the carrier and one of the two sidebands are removed, leaving only one sideband to carry all the information.
-</p>
-<p>
-  This saves power and spectrum space, since transmitting a carrier that carries no information of its own is wasted energy, and sending two identical copies of the same audio is wasted bandwidth. By stripping both away, SSB lets an operator put all of their transmitter's power into the one sideband that actually matters, which makes a huge practical difference on long-distance HF contacts where every decibel of signal counts.
-</p>
-<p>
-  Upper Sideband (USB) is normally used on frequencies above 10 MHz, while Lower Sideband (LSB) is commonly used below 10 MHz on the amateur bands. SSB is the standard voice mode for long-distance HF communication because it works well even when signals are weak, though it does have a distinctive, slightly muffled or "Donald Duck" sound to new listeners until their ears adjust and their receiver is tuned in correctly.
-</p>
-
-<h2>CW (Morse Code)</h2>
-<p>
-  CW stands for Continuous Wave and is the method used to send Morse code by radio. The transmitter is simply turned on and off to form the dots and dashes, making it about as simple as a radio signal can get, a single tone present or absent, with no voice or complex waveform involved at all.
-</p>
-<p>
-  CW is extremely efficient. Because it concentrates all of a transmitter's power into a single narrow tone rather than spreading it across the wider bandwidth that voice requires, a CW signal can often be heard clearly through noise and static that would completely bury a voice transmission. A skilled operator can maintain contact under conditions where voice signals are impossible to understand.
-</p>
-<p>
-  Morse code remains popular with many amateur radio operators because of its simplicity and its ability to get through noise and weak-signal paths, and many operators find real satisfaction in learning it as a skill in its own right. For a beginner, CW can feel intimidating at first, but modest daily practice with the code builds recognition surprisingly quickly, and even a slow, careful CW contact can succeed where a voice contact would fail entirely.
-</p>
-
-<h2>Digital Modes</h2>
-<p>
-  Digital modes encode information as precisely timed tones or phase changes that a computer can decode. Rather than a human voice or a human ear interpreting dots and dashes, software listens to the audio coming from the radio, recognizes the pattern of tones, and translates it directly into text or data on a screen, often catching signals far too weak or fast for a person to decode by ear.
-</p>
-<p>
-  Popular examples include FT8, which is widely used for weak-signal long-distance contacts and has become enormously popular because it can complete a full contact in under a minute using very little transmitter power. PSK31 is used for narrow-band keyboard conversations, letting two operators type back and forth much like an instant message. RTTY, short for radio teletype, is a classic digital mode with roots going back decades, and JS8Call builds on FT8's weak-signal strengths while also allowing free-form text messaging.
-</p>
-<p>
-  Many other digital modes exist for specific purposes such as image transmission, contesting, or high-speed data. Most require a computer connected to the radio, typically through a simple audio and control interface, along with free software that handles the encoding and decoding. For newcomers interested in the technical side of the hobby, digital modes are often the fastest way to start making genuine long-distance contacts, since the software does much of the heavy lifting that used to require years of practiced skill.
-</p>
-
-<h2>SDR (Software Defined Radio)</h2>
-<p>
-  Software Defined Radio moves many of the functions that used to be done by hardware circuits into software running on a computer or embedded processor. In a traditional radio, filtering, tuning, and demodulation are all handled by physical electronic components. In an SDR, much of that work is instead done by code, which makes the whole system dramatically more flexible.
-</p>
-<p>
-  An SDR typically receives a wide slice of the radio spectrum, converts it to digital form, and then lets software perform filtering, demodulation, and display. Instead of tuning to one frequency at a time the way an old-fashioned radio does, many SDRs let you see and listen across a wide swath of spectrum all at once, watching signals appear and disappear in real time on screen.
-</p>
-<p>
-  The same piece of hardware can receive AM, FM, SSB, CW, and digital modes simply by changing software settings, with no need to rewire or replace any physical circuitry. This flexibility is one reason SDRs have become popular with beginners and experienced listeners alike, since a single inexpensive piece of hardware paired with the right software can effectively become dozens of different kinds of radios.
-</p>
-
-<h2>SDR Software</h2>
-<p>
-  Several programs are commonly used with software defined radios, and choosing one is usually a beginner's first practical step after buying an SDR. Without the right software, an SDR is just a piece of hardware sitting idle, so getting comfortable with at least one of these programs is an essential early skill. SDR++ is a modern cross-platform option that many newcomers gravitate toward because of its clean interface and active development. SDR# is popular on Windows and has been a long-standing favorite in the hobby, with a large community and years of accumulated tutorials and plugins built up around it.
-</p>
-<p>
-  CubicSDR works on multiple operating systems, making it a solid choice for anyone not running Windows, while OpenWebRX allows multiple users to share a receiver over the internet, letting people around the world tune into a single physical SDR remotely through a web browser without installing anything at all. This last option is particularly useful for someone who wants to try shortwave listening before ever buying any equipment of their own.
-</p>
-<p>
-  These programs usually provide a live spectrum display, a waterfall view that shows signals over time, adjustable filters, recording ability, and connections to digital-mode software, so that the signals seen and heard in the SDR program can be passed along to separate decoding software when needed.
-</p>
-<p>
-  Most are free to download and use, which lowers the barrier to entry enormously. A newcomer can often be listening to real signals within minutes of installing one of these programs, watching the waterfall display fill with activity and clicking around to explore what is actually on the air right now, an experience that for many people is the moment the hobby truly clicks.
-</p>
-
-<h2>RTL-SDR</h2>
-<p>
-  RTL-SDR refers to a family of inexpensive USB dongles originally made for receiving digital television. Hobbyists discovered that the chip inside these dongles, intended only to tune television signals, could be repurposed with free software to act as a general-purpose radio receiver, and a whole corner of the hobby grew up around that discovery.
-</p>
-<p>
-  With free software they can be turned into general-purpose receivers covering a wide frequency range, typically from around 24 MHz up into the gigahertz range straight out of the box. An upconverter is often added if the user wants to listen to HF, since the basic chip does not tune reliably down into the lower shortwave frequencies without one, but the upconverter itself is a small and inexpensive accessory.
-</p>
-<p>
-  Performance is not equal to dedicated high-end receivers, and serious operators will eventually want better equipment for weak-signal or critical work, but the cost is low enough that many people start with an RTL-SDR. It is an excellent tool for learning what signals exist across the spectrum, and for many newcomers it is the single cheapest and easiest way to get a real taste of the hobby before investing in anything more expensive.
-</p>
-
-<h2>Antennas</h2>
-<p>
-  The antenna is usually the most important part of any radio station. It is the component that actually turns electrical energy into radio waves and back again, and no amount of clever electronics inside the radio itself can fully make up for a poor connection to the outside world. A radio with the best receiver circuitry in the world still cannot hear a signal that never reaches it in the first place.
-</p>
-<p>
-  A modest radio connected to a good antenna will almost always outperform an expensive radio connected to a poor antenna. This is one of the most repeated pieces of advice in the entire hobby, and for good reason, new operators often spend money upgrading their radio when the bigger improvement would have come from spending time and effort improving their antenna instead. A cheap radio and a well placed dipole will usually beat a top-of-the-line transceiver fighting through a cramped, low, or poorly matched piece of wire.
-</p>
-<p>
-  Antennas convert electrical signals into electromagnetic waves when transmitting and perform the reverse process when receiving. Height, length, location, and surrounding objects all affect how well an antenna works, sometimes dramatically so, since even a small change in placement can move an antenna out of the way of nearby noise sources or metal structures that were distorting its pattern.
-</p>
-<p>
-  Learning about antennas quickly improves results for any listener or operator, and the next several sections walk through some of the most common and beginner-friendly antenna types you are likely to encounter or build yourself, from the simple dipole to loops, verticals, and long wires, each suited to different amounts of space and different goals.
-</p>
-
-<h2>Dipole Antenna</h2>
-<p>
-  A half-wave dipole is one of the simplest and most effective antennas. It consists of two equal-length wires or elements fed in the centre, with the radio's feed line connected right at the middle point where the two halves meet. Despite its simplicity, it remains one of the most widely used and well understood antenna designs in all of radio.
-</p>
-<p>
-  The total length is roughly half the wavelength of the target frequency, which ties directly back to the wavelength concept covered earlier in this guide. A dipole can be hung horizontally between supports or arranged as an inverted V, with the centre point raised and the two ends sloping down toward the ground, a configuration that is often easier to fit into a typical yard than a perfectly straight horizontal run.
-</p>
-<p>
-  It works well on its design frequency and can often be used on related bands with the help of an antenna tuner, extending its usefulness beyond just the single frequency it was originally cut for. Many beginners build their first dipole from ordinary wire, some rope, and a couple of insulators, and it remains one of the most recommended first antenna projects precisely because it is cheap, forgiving, and genuinely effective.
-</p>
-
-<h2>Vertical Antennas</h2>
-<p>
-  Vertical antennas are mounted upright and are omnidirectional in the horizontal plane, meaning they send and receive roughly equally well in every compass direction at once rather than favoring one side. This makes them a popular general-purpose choice, especially for operators who do not know or do not care which direction a contact might come from.
-</p>
-<p>
-  They often produce low-angle radiation that is useful for long-distance contacts, since signals leaving the antenna close to the horizon tend to travel farther via skywave than signals launched steeply upward. A vertical needs a good ground system or a set of radial wires to perform well, essentially a network of wires laid out along or under the ground that completes the electrical picture the antenna needs in order to radiate efficiently.
-</p>
-<p>
-  Verticals are popular when horizontal space is limited, such as in small gardens or on balconies, since they take up very little footprint compared with a long horizontal wire. They can be more susceptible to local noise than some horizontal antennas, partly because they are often mounted close to the ground and close to noise sources like household wiring, but their DX, or long-distance, performance is often excellent, which keeps them a favorite despite that tradeoff.
-</p>
-
-<h2>Loop Antennas</h2>
-<p>
-  Loop antennas come in several forms, and the name covers a surprisingly broad range of designs that share little more than their basic circular or roughly closed shape. Small magnetic loops can be used for both transmitting and receiving in very limited spaces and are often tunable across a range of frequencies, making them a favorite for operators in apartments or anywhere a large outdoor antenna simply is not possible.
-</p>
-<p>
-  Larger loops such as delta loops or sky loops can offer good performance on multiple bands, and their full-size construction gives them characteristics that are genuinely competitive with other popular HF antenna designs, sometimes even outperforming a comparable dipole depending on how they are installed. These larger loops are usually strung up around the perimeter of a yard or between several supports, forming one continuous run of wire.
-</p>
-<p>
-  Receiving loops are sometimes used because they can reduce local electrical noise compared with wire antennas, since their directional pattern can be aimed to null out a nearby noise source while still picking up a distant station. This nulling ability makes small receiving loops popular specifically for pulling weak signals out from under strong local interference.
-</p>
-<p>
-  Loops are a practical option when a traditional dipole or vertical is not possible, and for beginners dealing with limited space or heavy local interference, a small loop antenna is often one of the more creative and rewarding solutions available, letting apartment dwellers and city listeners take part in HF listening that might otherwise seem out of reach.
-</p>
-
-<h2>Long Wire Antennas</h2>
-<p>
-  A long wire or random wire antenna is simply a length of wire as long and as high as the situation allows. Unlike a dipole, it does not need to be cut to a precise length for a particular frequency, which makes it appealing to beginners who just want to get something up in the air and start listening or transmitting without a lot of careful measurement.
-</p>
-<p>
-  It is usually fed at one end and used with an antenna tuner and a counterpoise or ground system, since an asymmetrical wire like this needs some help matching properly to the radio across different frequencies. The tuner adjusts electrically so that the radio sees a reasonable match even though the antenna itself was not built for any single specific band.
-</p>
-<p>
-  Performance varies with the exact length and height, but many operators make successful contacts with nothing more than a wire run to a tree or along a fence. It is one of the easiest HF antennas for a beginner to put up, requiring little more than some wire, an anchor point at each end, and a bit of patience, which is exactly why it remains such a common first project.
-</p>
-
-<h2>Feed Lines</h2>
-<p>
-  The feed line carries radio energy between the radio and the antenna. Even a perfectly designed antenna will underperform if the feed line connecting it back to the radio is poorly chosen, damaged, or unsuited to the frequency in use, so this often-overlooked component deserves real attention.
-</p>
-<p>
-  The two most common types are coaxial cable and ladder line, also called open-wire line. Coaxial cable is convenient and widely available, comes in many grades of quality, and is generally easier for beginners to work with because it is unbalanced and shielded, but it has higher loss, especially at higher frequencies, meaning some of the signal is wasted as heat inside the cable itself before it ever reaches the antenna.
-</p>
-<p>
-  Ladder line has very low loss but requires balanced operation and a suitable tuner, since it is an open, two-wire design that behaves differently from coax and is more sensitive to nearby metal objects. Choosing a good feed line and keeping it in good condition prevents unnecessary signal loss, and for a beginner, simply making sure connectors are weatherproofed and cable runs are as short and direct as practical will go a long way toward getting the most out of any antenna system.
-</p>
-
-<h2>Connectors</h2>
-<p>
-  Radio equipment uses several standard connectors, and learning to recognize them by sight is a small but genuinely useful skill for any newcomer, since mismatched connectors are one of the most common sources of beginner confusion and frustration.
-</p>
-<p>
-  SO-239 and PL-259, often called UHF connectors despite the somewhat misleading name, are common on HF radios and have been a standard in amateur radio for decades. BNC connectors allow quick attach and release and appear on many receivers and test instruments, prized for how easily they can be connected or disconnected with a simple quarter turn. SMA connectors are small and widely used on handheld radios and SDR dongles, where space is at a premium.
-</p>
-<p>
-  N-type connectors are robust and low-loss, making them popular for higher frequencies and outdoor use where weatherproofing and a solid, low-loss connection matter most. Adapters exist for almost every combination of these connector types, but each extra connection is a possible point of failure or loss, so experienced operators generally try to minimize the number of adapters stacked together in any given setup, favoring a direct, well-matched connection whenever possible.
-</p>
-
-<h2>SWR</h2>
-<p>
-  Standing Wave Ratio, or SWR, measures how well the antenna system is matched to the feed line and the transmitter. When there is a mismatch somewhere in the system, some of the transmitter's power reflects back instead of being radiated out through the antenna, and SWR is simply the number that quantifies how much of that reflection is happening.
-</p>
-<p>
-  A perfect match is 1:1, meaning essentially no power is being reflected back. Higher numbers mean more power is reflected back toward the radio instead of being radiated, which both wastes transmitter power and, in more severe cases, can stress or even damage sensitive components inside the radio if left unaddressed.
-</p>
-<p>
-  Modern radios usually reduce power automatically when SWR is high in order to protect their final stages, a built-in safety feature that most newcomers do not even notice until they see their transmitted power mysteriously drop. An antenna tuner can create a low SWR at the radio even if the antenna itself is not perfectly resonant, effectively hiding the mismatch from the radio's perspective, but the best results still come from a well-matched antenna, since a tuner cannot recover power that is being lost as heat elsewhere in the system.
-</p>
-
-<h2>Radio Noise</h2>
-<p>
-  Radio noise comes from both natural and man-made sources. Natural sources include lightning, atmospheric static, and cosmic noise arriving from deep space, all of which have existed since long before humans ever built a radio and which every operator simply has to work around.
-</p>
-<p>
-  Man-made sources include switching power supplies, LED lights, computers, solar inverters, electric fences, and many household devices, all of which can leak small amounts of unwanted radio energy as an unintended side effect of how they work. Individually these sources are often faint, but in a modern home filled with electronics they can add up to a noticeably raised noise floor that makes weak signals much harder to hear.
-</p>
-<p>
-  In urban and suburban areas, man-made noise is often the main limit on how weak a signal you can hear, sometimes far more so than distance or transmitter power. Locating and reducing local noise sources can improve reception more than buying a more expensive radio, and many experienced operators spend real time tracking down and eliminating noisy devices in and around their own home before ever considering an equipment upgrade, because the payoff is often dramatic.
-</p>
-
-<h2>Filters</h2>
-<p>
-  Filters control which frequencies pass through a circuit and which are rejected. In a world full of overlapping signals, filters are what allow a radio to focus on the one signal you actually want to hear while pushing everything else out of the way.
-</p>
-<p>
-  A low-pass filter passes frequencies below a chosen cutoff, while a high-pass filter passes frequencies above a cutoff, letting engineers shape exactly which part of the spectrum reaches a given stage of a radio circuit. A band-pass filter passes a defined range and rejects frequencies outside it, combining both ideas to isolate one particular slice of spectrum, which is essentially what happens every time you tune a receiver to a specific station.
-</p>
-<p>
-  A notch filter rejects a very narrow slice of spectrum and is useful for removing an unwanted carrier or tone, such as a persistent whistle or a nearby strong signal bleeding into a weaker one you are trying to hear. Receivers and transmitters both rely on filters to keep signals clean and to prevent interference, and understanding the basic idea behind them helps explain many of the settings and adjustments found on more advanced radios.
-</p>
-
-<h2>Gain</h2>
-<p>
-  Gain describes an increase in signal strength, and it is one of those words that shows up constantly in radio specifications without always being clearly explained to newcomers. Antenna gain measures how well an antenna focuses energy in a preferred direction compared with a reference antenna, effectively describing how much of a boost you get by pointing your antenna's strongest response toward the direction you care about.
-</p>
-<p>
-  Amplifier gain, by contrast, is the increase in power provided by an electronic amplifier, a genuinely different concept even though the same word is used. An amplifier actually adds real power to a signal using an external power source, taking a weak signal in and producing a stronger one out.
-</p>
-<p>
-  Antenna gain does not create energy. It simply redistributes the available energy so that more of it goes in useful directions and less is wasted in unwanted directions, much like how a flashlight reflector does not make the bulb brighter but does concentrate its light into a more useful beam. Keeping this distinction clear, between an antenna reshaping energy and an amplifier adding energy, helps avoid a lot of confusion for anyone comparing radio equipment for the first time.
-</p>
-
-<h2>Decibels (dB)</h2>
-<p>
-  The decibel is a logarithmic unit used to express ratios of power or voltage. Rather than describing signal changes in plain multiples, which can quickly become unwieldy given how enormous the range of signal strengths in radio actually is, decibels compress that huge range into much more manageable numbers.
-</p>
-<p>
-  A change of 3 dB is roughly a doubling or halving of power, while a change of 10 dB is a tenfold change in power. These two reference points are worth memorizing early on, since so much of radio's practical math boils down to combinations of them, letting an operator estimate the real-world effect of a given gain or loss almost at a glance once the pattern becomes familiar.
-</p>
-<p>
-  Decibels make it easy to add gains and losses along a complete signal path, since instead of multiplying and dividing ratios you can simply add and subtract decibel values as a signal passes through cable, filters, amplifiers, and antennas on its way from transmitter to receiver. You will see dB used for antenna gain, feed-line loss, filter performance, and signal reports, and once you become comfortable with decibels, many radio specifications become easier to understand, turning what once looked like intimidating spec sheets into numbers that actually mean something practical.
-</p>
-
-<h2>Signal Reports</h2>
-<p>
-  Operators exchange signal reports so each station knows how well it is being received. This simple exchange of information is a core part of nearly every radio contact, giving both sides useful feedback about how their setup, antenna, and propagation are actually performing in real time rather than leaving it to guesswork.
-</p>
-<p>
-  On CW the RST system is common. R stands for readability, S for strength, and T for tone quality, giving a compact three-number summary of exactly how a signal sounded on the receiving end. On voice, operators often give a simple strength report or use the R and S portions of RST, since tone quality is less relevant to a spoken voice than it is to a Morse code tone.
-</p>
-<p>
-  The S-meter on a receiver gives a rough visual indication of signal strength, although the calibration varies between different radios, so an "S9" report on one radio might not correspond exactly to the same physical signal strength on another. Honest signal reports help other operators know how their station is performing, and for a beginner, learning to give and interpret these reports accurately is a small but genuinely useful skill that quickly becomes second nature.
-</p>
-
-<h2>Callsigns</h2>
-<p>
-  A callsign is a unique identifier assigned to a licensed radio station. Every licensed operator in the world has one, and no two stations share the same callsign at the same time, which makes it possible to know exactly who is transmitting even among thousands of other operators active on the same bands.
-</p>
-<p>
-  In the amateur service the callsign usually indicates the country and sometimes the region of the operator, since callsign prefixes are allocated internationally by country and often subdivided further within larger nations. A newcomer can often make a reasonable guess at where a station is located just from the first letter or two of its callsign, long before ever hearing the operator say where they are.
-</p>
-<p>
-  Operators are required to identify with their callsign at regular intervals during a contact, a rule that exists in essentially every country's amateur regulations. Listening for callsigns is one of the main ways to know who is transmitting and where they are located, and callsigns follow patterns that become familiar with practice, so what sounds like a meaningless jumble of letters and numbers to a total newcomer quickly starts to carry real information once you have spent some time on the bands.
-</p>
-
-<h2>Amateur Radio</h2>
-<p>
-  Amateur radio, often called ham radio, is a licensed service that allows individuals to experiment with radio technology, communicate with other operators, provide emergency communications, and simply talk with people around the world. It occupies a somewhat unusual space, part hobby, part public service, and part ongoing technical education, which is a large part of its lasting appeal.
-</p>
-<p>
-  It is not broadcasting. Contacts are made between specific stations, generally two operators having a genuine back-and-forth conversation, rather than one station sending out programming for a general audience to passively receive. This distinction matters both practically and legally, since amateur radio rules are built around this two-way, non-commercial nature of the service.
-</p>
-<p>
-  Operators use voice, Morse code, and many digital modes, and the hobby includes local contacts, long-distance DX chasing, contesting, satellite work, and technical experimentation. For a newcomer, one of the most appealing things about amateur radio is just how many different directions it can go, someone might get licensed purely for emergency preparedness and end up fascinated by satellite communication, or start out chasing distant contacts and end up building their own antennas and equipment from scratch.
-</p>
-
-<h2>Getting a Ham License</h2>
-<p>
-  In almost every country, transmitting on amateur radio frequencies requires a license. This requirement exists to make sure operators understand the basics of how to use the shared radio spectrum responsibly, without causing harmful interference to other services, and it is generally seen less as a barrier and more as a rite of passage into the hobby.
-</p>
-<p>
-  Candidates must pass an examination that covers regulations, basic electronics, operating practices, and safety. The exact content varies by country, but the underlying goal is broadly similar everywhere, to confirm that a new operator has enough foundational knowledge to operate safely and considerately once they start transmitting on their own.
-</p>
-<p>
-  License classes and the privileges that come with them vary by country, and in many places there are entry-level licenses that allow useful privileges with a relatively straightforward test, making the first step into the hobby far less intimidating than newcomers often expect. Listening only does not require a license in most countries, so beginners can explore the bands freely before deciding to take an exam, which is exactly why so many people, including the readers of a site like this one, start out as listeners long before they ever transmit a single word themselves.
-</p>
-
-<h2>Amateur Radio Bands</h2>
-<p>
-  Amateur radio has allocations across HF, VHF, and UHF, spread out in individual bands rather than one single continuous chunk of spectrum. This patchwork of allocations exists for historical and technical reasons, but the practical result is that amateur operators have access to a genuinely wide range of frequencies, each with its own character.
-</p>
-<p>
-  On HF the most popular bands include 80 metres, 40 metres, 20 metres, 15 metres, and 10 metres, named according to their approximate wavelength rather than their frequency in megahertz, a naming convention that takes a little getting used to but quickly becomes second nature. Each band behaves differently depending on the time of day and solar conditions, so an experienced operator will often check several bands before finding the one that is currently open for the distance they are trying to reach.
-</p>
-<p>
-  On VHF and UHF the 2 metre and 70 centimetre bands are the most active, often supported by local repeaters that extend their otherwise limited line-of-sight range. Exact frequency limits and mode privileges depend on the operator's license class and the rules of each country, so one of the first things a newly licensed operator typically does is look up exactly which bands and privileges their particular license grants them.
-</p>
-
-<h2>Shortwave Listening (SWL)</h2>
-<p>
-  Shortwave listening is the practice of receiving broadcasts, utility stations, amateur transmissions, and other signals without transmitting anything yourself. It is, for many people, the natural entry point into the entire radio hobby, since it requires no test, no license, and often no more equipment than a simple portable receiver.
-</p>
-<p>
-  Many people begin their radio interest as shortwave listeners using portable receivers, SDR dongles, or web-based receivers, gradually building familiarity with how the bands behave, what kinds of stations exist, and how propagation changes over the course of a day or a season, all before ever deciding whether they want to pursue a license and start transmitting themselves.
-</p>
-<p>
-  SWLing requires no license in most places and offers an inexpensive way to learn about propagation, different modes, and the variety of signals that exist below 30 MHz. For a total newcomer, spending a few evenings simply scanning across the shortwave bands with a basic receiver is one of the best possible introductions to everything else covered in this guide, since it turns abstract concepts like skywave propagation and modulation into something you can actually hear for yourself.
-</p>
-
-<h2>Broadcast Radio</h2>
-<p>
-  Broadcast radio includes local AM and FM stations as well as international shortwave broadcasters, together forming the most familiar face of radio for most people, since it is the kind of radio nearly everyone has grown up hearing in a car, a kitchen, or a workplace.
-</p>
-<p>
-  FM stations are found in the VHF range and usually serve a local or regional area, generally covering a city or a portion of a state or province with a clear, low-noise signal thanks to the noise-resistant nature of FM discussed earlier. AM stations occupy the medium-frequency band and can travel much farther at night via skywave, which is why a listener driving late at night can sometimes pick up an AM station from hundreds of miles away that is completely unreachable during the day.
-</p>
-<p>
-  International shortwave broadcasting has declined from its peak, as many broadcasters shifted their international outreach toward the internet and satellite instead, but it still exists, and many stations remain on the air with news, music, and cultural programs aimed at distant audiences. For a beginner exploring shortwave for the first time, finding one of these international broadcasters is often a memorable early experience, hearing a voice or a piece of music from thousands of miles away arriving on nothing more than a simple wire antenna.
-</p>
-
-<h2>Marine Radio</h2>
-<p>
-  Marine radio is used for communication between ships and between ships and shore stations, forming an essential part of how vessels coordinate, request assistance, and stay safe out on the water, often in situations where no other form of communication is available at all.
-</p>
-<p>
-  Marine VHF covers short to medium distances and includes Channel 16, the international distress and calling channel, which is monitored constantly by ships, coast guard stations, and marinas around the world as the first point of contact in any emergency at sea. Weather information, port operations, and routine traffic also appear on marine VHF channels, making it a genuinely busy and practical part of the spectrum rather than a quiet or rarely used one.
-</p>
-<p>
-  Longer-range marine communication still takes place on HF frequencies, allowing vessels far out at sea, well beyond the reach of VHF's line-of-sight limitations, to stay in contact using skywave propagation instead. Listening to marine traffic is legal in most places and gives a clear picture of real-world radio use on the water, and for a newcomer with a suitable scanner or receiver, marine VHF is often one of the easier and more immediately interesting bands to start exploring.
-</p>
-
-<h2>Aviation Radio</h2>
-<p>
-  Aircraft communicate mainly in the VHF airband between roughly 118 and 137 MHz using amplitude modulation, a deliberate and long-standing design choice that sets aviation apart from most other modern VHF services, which almost universally moved to FM decades ago.
-</p>
-<p>
-  AM is retained in aviation because a strong signal does not completely capture the receiver. In FM, a stronger signal on the same frequency will typically block out a weaker one entirely, a behavior known as capture effect. In AM, multiple signals on the same frequency can be heard at once, layered over each other, so weaker stations remain partly audible.
-</p>
-<p>
-  This is an important safety feature when multiple aircraft are sharing a frequency, since it means a pilot or controller is more likely to notice that someone else is also trying to transmit at the same time, rather than one voice completely masking the other without warning. Air traffic control, weather reports, and company communications can all be heard by anyone with a suitable receiver, and aviation listening has become a popular niche within the hobby, particularly for people who enjoy following flights near airports or along busy air corridors.
-</p>
-
-<h2>Weather Radio</h2>
-<p>
-  Weather radio services broadcast continuous weather information and emergency alerts, running around the clock so that current conditions and warnings are always available to anyone tuned in, regardless of the time of day or night. Unlike most broadcast stations, weather radio is not designed for entertainment, its entire purpose is to keep the public informed and safe.
-</p>
-<p>
-  In the United States, NOAA Weather Radio uses seven VHF frequencies and can be received with dedicated weather radios or many scanners, providing continuous forecasts, observations, and, critically, automated alerts for severe weather that can activate a receiver even if it is otherwise sitting silent. This automatic alerting feature, sometimes called a tone alert or SAME alert, means a weather radio can sit quietly in a home for months and still spring into action the moment a serious warning is issued.
-</p>
-<p>
-  Similar services exist in other countries, generally built around the same basic idea of a dependable, always-on source of official weather information, often coordinated with each nation's meteorological agency and emergency management authorities.
-</p>
-<p>
-  These broadcasts are especially useful during severe weather and are designed to remain available even when other communication systems are overloaded or damaged, since weather radio infrastructure is typically built with redundancy and backup power specifically for these situations. For a beginner, a small weather radio receiver is often one of the most immediately practical and useful pieces of radio equipment to own, well beyond its role as an introduction to the hobby.
-</p>
-
-<h2>Scanning</h2>
-<p>
-  Scanning is the practice of monitoring a range of frequencies for active transmissions. Rather than sitting tuned to a single fixed frequency, a scanner rapidly cycles through a programmed list of channels or a wide range of frequencies, stopping automatically whenever it detects an active signal, which makes it a genuinely convenient way to follow activity across many different services at once.
-</p>
-<p>
-  Radio scanners can follow public-safety dispatch, aviation, marine, railroad, and other services where reception is legal, letting a listener build a real picture of everything happening on the airwaves in their local area without needing to know in advance exactly which frequency to check at any given moment.
-</p>
-<p>
-  Laws about what may be monitored vary by location, and some communications are encrypted, so it is worth checking local regulations before diving in, particularly around public safety traffic in some regions. Scanning is a practical way to learn how professional radio systems are organized and to hear real traffic in your local area, and for many newcomers, a scanner is one of the very first pieces of equipment they buy, precisely because it offers such an immediate and varied window into the radio world around them.
-</p>
-
-<h2>Satellites</h2>
-<p>
-  Many satellites transmit signals that can be received with modest equipment, which often surprises newcomers who assume that satellite reception requires large, expensive dish antennas. In reality, a wide range of satellites can be heard with simple handheld antennas and inexpensive receivers, especially those in low Earth orbit passing relatively close overhead.
-</p>
-<p>
-  Weather satellites send images that can be decoded into pictures of cloud cover, and receiving one of these images for the first time, watching a live picture of Earth's weather assemble line by line from a signal you captured yourself, is a genuinely popular and rewarding beginner project. Amateur radio satellites carry voice and digital communications that licensed operators can use, essentially acting as repeaters in orbit that dramatically extend the range of a small handheld radio.
-</p>
-<p>
-  The International Space Station also transmits on amateur frequencies at times, occasionally including special event contacts and even direct conversations with astronauts, which understandably generates enormous excitement whenever it happens. Tracking programs tell you when a satellite will pass overhead, calculating the exact times and directions based on orbital data, and simple antennas are often enough for reception, making satellite listening a surprisingly accessible corner of the hobby for anyone willing to look up.
-</p>
-
-<h2>Radio Safety</h2>
-<p>
-  Safe radio operation includes several important practices, and while radio is generally a very safe hobby, a few areas genuinely do deserve careful attention, particularly once equipment, power, and outdoor antennas are involved.
-</p>
-<p>
-  RF exposure should be kept within recommended limits, especially when using high power or directional antennas close to people, since radio frequency energy at high enough levels and close enough range can cause heating effects in tissue. Station equipment should be properly grounded and bonded, both to protect against electrical faults and to reduce the risk of static buildup or stray RF causing problems elsewhere in the home.
-</p>
-<p>
-  Lightning protection is essential for any outdoor antenna, since an antenna and its feed line running into a house represent a real path for a lightning strike to follow if not properly protected and grounded. Tower and antenna work requires careful attention to falls and electrical hazards, and power supplies should be fused and installed correctly to avoid fire or shock risk. Good safety habits protect both the operator and the equipment, and taking the time to learn them properly before setting up a station is time well spent for any newcomer.
-</p>
-
-<h2>Radio Etiquette</h2>
-<p>
-  Good operating practice makes the bands more enjoyable for everyone, and much like any shared space, radio has its own set of unwritten but widely respected customs that help keep things running smoothly for the whole community of operators and listeners.
-</p>
-<p>
-  Listen before transmitting to avoid interfering with an existing contact, since two stations transmitting on top of each other at once usually means neither can be understood properly. Use clear language or standard phonetics when spelling callsigns and important information, since radio audio quality can vary a great deal, and a clearly spoken phonetic alphabet removes a lot of room for misunderstanding.
-</p>
-<p>
-  Keep transmissions reasonably short, identify with your callsign as required by the rules, and be courteous even when conditions are difficult or when you encounter operators with different styles, since the same patience that makes any shared hobby pleasant applies just as much here. The phonetic alphabet, Alpha, Bravo, Charlie, and so on, is widely used and worth learning early, since it comes up constantly in real operating and will make a newcomer sound and feel far more confident right from their very first contacts.
-</p>
-
-<h2>Common Radio Terms</h2>
-<p>
-  Radio has many standard terms and abbreviations, many of them inherited from decades of Morse code operating where brevity mattered enormously, and newcomers often find this shorthand a little bewildering at first before it becomes second nature.
-</p>
-<p>
-  QRM means man-made interference, while QRN means natural noise or static, two terms that let an operator instantly communicate the type of problem they are experiencing without a lengthy explanation. QTH means location, a term you will hear constantly as operators exchange where they are calling from. Simplex means transmitting and receiving on the same frequency, while duplex means using separate frequencies for transmit and receive.
-</p>
-<p>
-  A repeater receives on one frequency and retransmits on another to extend range, tying directly back to the earlier discussion of line-of-sight propagation and how repeaters help VHF and UHF signals travel farther than they otherwise could. Learning these common terms makes it easier to understand conversations and written material about radio, and most newcomers find that after just a few weeks of exposure, terms that once looked like a foreign language start to feel completely natural.
-</p>
-
-<h2>Radio Equipment</h2>
-<p>
-  A typical radio station may include a receiver or a transceiver, a power supply, an antenna system, feed line, an antenna tuner, a computer for digital modes or SDR control, headphones or a speaker, and accessories such as filters, amplifiers, and meters. Seeing the whole list at once can feel overwhelming to a newcomer, but almost nobody buys or builds all of this at the same time.
-</p>
-<p>
-  Beginners often start with a simple receiver or an SDR dongle and a basic antenna, exactly the kind of setup described earlier in this guide, and gradually branch outward from there as their interests become clearer. There is no single correct starting point, and plenty of very experienced operators started with nothing more than a cheap portable radio picked up almost by accident.
-</p>
-<p>
-  Equipment can be added gradually as interest and experience grow, with each new piece typically chosen to solve a specific problem or open up a specific new capability rather than purchased all at once. Reliability and ease of use matter more than having the most expensive items, and a modest, well understood setup that a newcomer is comfortable operating will almost always serve them better than an intimidating stack of high-end gear they do not yet know how to use.
-</p>
-
-<h2>Troubleshooting</h2>
-<p>
-  When reception is poor, a systematic approach usually finds the cause, and learning to troubleshoot methodically is one of the most valuable skills any radio hobbyist eventually develops, since equipment problems are common and rarely as mysterious as they first appear.
-</p>
-<p>
-  Check that the antenna is connected and in good condition, inspect the feed line for damage or water ingress, and listen for local noise and try to identify the source, drawing on the noise concepts covered earlier in this guide. Confirm that the radio is set to the correct mode and filter width, since a surprising number of "broken radio" problems turn out to simply be a mode or filter setting left in the wrong position.
-</p>
-<p>
-  Verify that power and grounding are sound, and change only one thing at a time so you can tell what made a difference, resisting the natural urge to adjust several settings or swap several parts all at once, which only makes it harder to identify what actually fixed, or caused, the problem. Most problems turn out to be simple once they are isolated, and with a little practice, a newcomer can usually work through this same checklist almost automatically whenever something does not sound quite right.
-</p>
-
-<h2>Resources</h2>
-<ul>
-  <li><a href="https://en.wikipedia.org/wiki/Amateur_radio" target="_blank">Wikipedia: Amateur radio</a></li>
-  <li><a href="https://en.wikipedia.org/wiki/Software-defined_radio" target="_blank">Wikipedia: Software-defined radio</a></li>
-  <li><a href="https://en.wikipedia.org/wiki/High_frequency" target="_blank">Wikipedia: High frequency (HF)</a></li>
-  <li><a href="https://www.hamqsl.com/solar.html" target="_blank">HamQSL Solar and HF Conditions</a></li>
-  <li><a href="https://www.rx.linkfanel.net/" target="_blank">KiwiSDR Receiver Map</a></li>
-</ul>
+    <nav class="secondary-nav" id="secondaryNav"> 
+      <div class="container">
+        <ul>
+          <li><a href="#sdrs">Online SDRs</a></li>
+          <li><a href="#equipment">Equipment Sources</a></li>
+          <li><a href="#sources">Monitoring Sources</a></li>
+          <li><a href="#propagation">Propagation</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://ssb.surf/invite">Contact Us</a></li>
+        </ul>
+      </div> 
+    </nav>
+  </header>
+  <section class="hero-split">
+    <div class="container hero-split-inner">
+      <div class="hero-left">
  
-    <h2>Other Radio Related Websites</h2>
-<ul>
-  <li><a href="https://www.dxengineering.com/" target="_blank">DX Engineering</a></li>
-  <li><a href="https://www.arrl.org/" target="_blank">AARL</a></li>
-  <li><a href="https://www.cqota.com/" target="_blank">CQOTA</a></li>
-  <li><a href="https://priyom.org/" target="_blank">Priyom</a></li>
-  <li><a href="http://simtx.net" target="_blank">SimTX</a></li>
-</ul>
-  
-  <h2>Want to Listen on the Web?</h2>
-<ul>
-  <li><a href="http://kiwisdr.com/public/" target="_blank">Online SDR List</a></li>
-  <li><a href="http://websdr.ewi.utwente.nl:8901/" target="_blank">Simple Web SDR, Netherlands, NL.</a></li>
-  <li><a href="http://50.48.154.196:8073/" target="_blank">KiwiSDR, Rochester, New York USA.</a></li>
-  <li><a href="http://kiwisdr.dynpc.net:8073/" target="_blank">KiwiSDR, Hamburg, Germany, DE.</a></li>
-  <li><a href="http://kiwisdr.hirokinet.com:8074/" target="_blank">KiwiSDR, Tokyo, Japan, JP.</a></li>
-</ul>
+        <h1>Visit our Sister Site!</h1>
+        <p class="hero-desc">
+         A VHF Database for Radio Enthusiast's in the Northeast Pennsylvania Region!
+        </p>
+        <a href="https://www.nepafreq.org?utm_source=ssb.surf" target="_blank" rel="noopener" class="btn-red">Visit</a>
+      </div>
 
- <h2>Unrelated</h2>
-</ul>
- <li><a href="http://ssb.surf/duckdrop" target="_blank">DuckDrop</a></li>
-  </ul>
-  
-<footer>
-  ssb.surf ~ What is Radio? ~ Sponsered by NepaFREQ.org ‘By Enthusiasts, For Enthusiasts.’
-</footer>
+      <div class="hero-right">
+        <div class="slideshow" id="slideshow">
+          <div class="slides-track" id="slidesTrack">
+            <a href="https://simtx.net?utm_source=ssb.surf" class="slide">
+              <img src="https://files.catbox.moe/hh0k6c.jpg" alt="SimTX">
+              <div class="slide-caption">Computer Radio Simulator (TCP)</div>
+            </a>
+            <a href="https://hamqsl.com?utm_source=ssb.surf" class="slide">
+              <img src="https://files.catbox.moe/g0jmns.png" alt="HamQSL">
+              <div class="slide-caption">HF Propagation</div>
+            </a>
+            <a href="https://dxengineering.com?utm_source=ssb.surf" class="slide">
+              <img src="https://static.dxengineering.com/global/images/facebook/images_opengraph/dxeogdefaultimage.gif" alt="DXEngineering">
+              <div class="slide-caption">Online Ham Store</div>
+            </a>
+            <a href="https://kiwisdr.com?utm_source=ssb.surf" class="slide">
+              <img src="https://swling.com/blog/wp-content/uploads/2020/06/KiwiSDR-Map-View.jpeg" alt="KiwiSDR">
+              <div class="slide-caption">Online Software Defined Radio</div>
+            </a>
+          </div>
+          <button class="slide-btn prev" id="prevBtn" aria-label="Previous">&#10094;</button>
+          <button class="slide-btn next" id="nextBtn" aria-label="Next">&#10095;</button>
+          <div class="slide-dots" id="slideDots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+      </div>
+    </div>
+  </section>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="sdrs" class="content-block">
+    <div class="container">
+      <h2 class="section-title">Featured Web Receivers</h2>
+      <p class="section-intro">
+        A list of Select public receivers
+      </p>
+
+      <div class="sdr-list-box">
+
+        <ul class="sdr-list">
+          <li>
+            <a href="http://kiwisdr.com/public/" target="_blank" rel="noopener">Online SDR List</a>
+            <span class="sdr-meta">Full public KiwiSDR directory</span>
+          </li>
+          <li>
+            <a href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">WebSDR, Netherlands, NL</a>
+            <span class="sdr-meta">University of Twente, 0 to 29 MHz</span>
+          </li>
+          <li>
+            <a href="http://50.48.154.196:8073/" target="_blank" rel="noopener">KiwiSDR, Rochester, New York US</a>
+            <span class="sdr-meta">KiwiSDR, HF coverage</span>
+          </li>
+          <li>
+            <a href="http://kiwisdr.dynpc.net:8073/" target="_blank" rel="noopener">KiwiSDR, Hamburg, Germany, DE</a>
+            <span class="sdr-meta">KiwiSDR, HF coverage</span>
+          </li>
+          <li>
+            <a href="http://kiwisdr.hirokinet.com:8074/" target="_blank" rel="noopener">KiwiSDR, Tokyo, Japan, JP</a>
+            <span class="sdr-meta">KiwiSDR, HF coverage</span>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="more-links">
+        <a href="https://www.rx.linkfanel.net/" target="_blank" rel="noopener" class="btn-outline">KiwiSDR Map</a>
+        <a href="https://www.websdr.org/" target="_blank" rel="noopener" class="btn-outline">WebSDR.org Network</a>
+        <a href="https://www.openwebrx.de/" target="_blank" rel="noopener" class="btn-outline">OpenWebRX / Receiverbook</a>
+      </div>
+    </div>
+  </section>
+  <section id="equipment" class="content-block alt">
+    <div class="container">
+      <h2 class="section-title">Equipment and DX Sellers</h2>
+      <p class="section-intro">
+        Independent listings of established suppliers. ssb.surf LLC has no commercial affiliation with these companies.
+      </p>
+
+      <div class="info-table">
+        <div class="info-row">
+          <div class="info-main">
+            <strong>DX Engineering</strong>
+            <span>HF/VHF antennas, station accessories, hardware and related equipment.</span>
+          </div>
+          <a href="https://www.dxengineering.com/" target="_blank" rel="noopener" class="btn-small">Visit</a>
+        </div>
+        <div class="info-row">
+          <div class="info-main">
+            <strong>Specialty SDR Sources</strong>
+            <span>SDRplay, Airspy, RTLSDR based receivers and SDR hardware.</span>
+          </div>
+          <a href="https://www.sdrplay.com/" target="_blank" rel="noopener" class="btn-small">Visit</a>
+        </div>
+        <div class="info-row">
+          <div class="info-main">
+            <strong>Portable and Desktop Receivers</strong>
+            <span>Tecsun, Sangean, XHDATA, Eton and similar SSB capable shortwave radios.</span>
+          </div>
+          <a href="https://swling.com/db/" target="_blank" rel="noopener" class="btn-small">Visit</a>
+        </div>
+        <div class="info-row">
+          <div class="info-main">
+            <strong>Ham Radio</strong>
+            <span>Transceivers, receivers, antennas and station accessories from major outlets.</span>
+          </div>
+          <a href="https://www.hamradio.com/" target="_blank" rel="noopener" class="btn-small">Visit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="sources" class="content-block">
+    <div class="container">
+      <h2 class="section-title">Monitoring and Information Sources</h2>
+      <div class="info-table">
+        <div class="info-row">
+          <div class="info-main">
+            <strong>EiBi Shortwave Schedules</strong>
+            <span>Frequency and program schedule database widely used by listeners.</span>
+          </div>
+          <a href="http://www.eibispace.de/" target="_blank" rel="noopener" class="btn-small">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="propagation" class="content-block alt">
+    <div class="container">
+      <h2 class="section-title">Propagation and Band Conditions</h2>
+      <p class="section-intro">Live solar data is shown below. Click the image for the full HamQSL page.</p>
+
+      <div class="solar-wrap">
+        <a href="https://www.hamqsl.com/solar.html" title="Solar-Terrestrial Data" target="_blank" rel="noopener">
+          <img src="https://www.hamqsl.com/solar101pic.php" alt="Current Solar-Terrestrial Data from HamQSL" class="solar-img">
+        </a>
+      </div>
+
+      <div class="more-links" style="margin-top:20px;">
+        <a href="https://www.swpc.noaa.gov/" target="_blank" rel="noopener" class="btn-outline">SWPC</a>
+      </div>
+    </div>
+  </section>
+  <section id="about" class="content-block">
+    <div class="container">
+      <h2 class="section-title">About ssb.surf LLC</h2>
+      <div class="about-wrap">
+        <div class="about-text">
+          <p>
+            ssb.surf maintains this informational directory focused on practical resources 
+            for shortwave listening, HF monitoring and SSB operations. We organize publicly 
+            available tools, receiver links, equipment sources and propagation data.
+          </p>
+          </p>
+          <p><strong>Contact:</strong> <a href="mailto:info@ssb.surf">info@ssb.surf</a></p>
+        </div>
+        <div class="about-side">
+          <h3>What You Will Find</h3>
+          <ul>
+            <li>Curated online SDR links</li>
+            <li>Equipment and supplier references</li>
+            <li>Frequency and schedule sources</li>
+            <li>Propagation data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">ssb.surf <span>LLC</span></div>
+          <p>Radio Intelligence and Resources</p>
+          <p class="fine">Independent informational directory for shortwave, HF and SSB.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#sdrs">Online SDRs</a></li>
+            <li><a href="#equipment">Equipment Sources</a></li>
+            <li><a href="#sources">Monitoring Sources</a></li>
+            <li><a href="#propagation">Propagation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Notice</h4>
+          <p class="fine">
+            Links are provided for information only. 
+            ssb.surf is not affiliated with linked sites or sellers. 
+            Users must comply with all applicable regulations.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> ssb.surf All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
