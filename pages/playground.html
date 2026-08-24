@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waterfall Playground</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #c0c0c0;
+  color: #000000;
+  font-family: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  align-items: flex-start;
+}
+
+.panel {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 8px;
+}
+
+.waterfall-panel {
+  flex: 2 1 760px;
+  min-width: 320px;
+}
+
+.waterfall-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #000000;
+  margin-bottom: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
+canvas#waterfall {
+  width: 100%;
+  height: 560px;
+  display: block;
+  background: #000000;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.ruler {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #000000;
+  padding: 2px 2px 6px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+canvas#spectrum {
+  width: 100%;
+  height: 90px;
+  display: block;
+  background: #000000;
+  margin-top: 4px;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.controls-panel {
+  flex: 1 1 320px;
+  min-width: 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.control-group h2 {
+  font-size: 12px;
+  color: #000000;
+  margin: 0 0 6px;
+  font-weight: bold;
+  border-bottom: 1px solid #808080;
+  padding-bottom: 3px;
+}
+
+label {
+  display: block;
+  font-size: 11px;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+select {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 2px;
+  margin-top: 2px;
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkbox-label input {
+  width: auto;
+  margin: 0;
+}
+
+button {
+  width: 100%;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  background: #c0c0c0;
+  color: #000000;
+  font-size: 12px;
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #d4d0c8;
+}
+
+button:active:not(:disabled) {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+button:disabled {
+  color: #808080;
+  cursor: not-allowed;
+}
+
+.primary-btn {
+  background: #c0c0c0;
+  font-weight: bold;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: #d4d0c8;
+}
+</style> 
+</head>
+<body>
+
+<main>
+  <section class="panel waterfall-panel">
+    <div class="waterfall-header">
+      <span>Waterfall Playground </span>
+      <span id="freqReadout"></span>
+    </div>
+    <canvas id="waterfall" width="1400" height="560"></canvas>
+    <div class="ruler" id="ruler"></div>
+    <canvas id="spectrum" width="1400" height="90"></canvas>
+  </section>
+
+  <section class="panel controls-panel">
+
+    <div class="control-group">
+      <h2>Signal Generation</h2>
+      <label>Demod Mode
+        <select id="demodMode">
+          <option value="usb">USB</option>
+          <option value="lsb">LSB</option>
+          <option value="iq">IQ</option>
+        </select>
+      </label>
+      <button id="generateBtn" class="primary-btn">Generate Random</button>
+      <button id="applyBtn">Apply</button>
+      <button id="playBtn" disabled>Play</button>
+      <button id="stopBtn" disabled>Stop</button>
+    </div>
+
+    <div class="control-group">
+      <h2>Filter Bandwidth</h2>
+      <label>Bandwidth
+        <select id="filterBandwidth"></select>
+      </label>
+    </div>
+
+    <div class="control-group">
+      <h2>Path Shape</h2>
+      <label>Path Style
+        <select id="pathStyle">
+          <option value="straight">Straight</option>
+          <option value="wobble">Sine wobble</option>
+          <option value="randomWalk">Random walk</option>
+          <option value="stepped">Stepped</option>
+          <option value="burstHop">Burst hop</option>
+        </select>
+      </label>
+      <label>Base Frequency: <span id="baseFreqVal">800</span> Hz
+        <input type="range" id="baseFreq" min="200" max="2500" value="800">
+      </label>
+      <label>Wobble Amount: <span id="wobbleVal">0.4</span>
+        <input type="range" id="wobble" min="0" max="1" step="0.01" value="0.4">
+      </label>
+      <label>Wobble Speed: <span id="wobbleSpeedVal">1.0</span> Hz
+        <input type="range" id="wobbleSpeed" min="0.05" max="5" step="0.05" value="1.0">
+      </label>
+      <label>Drift: <span id="driftVal">0</span> Hz/s
+        <input type="range" id="drift" min="-400" max="400" value="0">
+      </label>
+      <label>Hop Rate: <span id="hopRateVal">2.0</span> Hz
+        <input type="range" id="hopRate" min="0.2" max="8" step="0.1" value="2.0">
+      </label>
+      <label>Duration: <span id="durationVal">4.0</span> s
+        <input type="range" id="duration" min="1" max="12" step="0.5" value="4">
+      </label>
+    </div>
+
+    <div class="control-group">
+      <h2>Texture</h2>
+      <label>Waveform
+        <select id="waveShape">
+          <option value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+          <option value="triangle">Triangle</option>
+          <option value="noiseAM">AM Noise</option>
+          <option value="morseLike">Morse</option>
+          <option value="broadband">Broadband</option>
+        </select>
+      </label>
+      <label>Bandwidth: <span id="bandwidthVal">0.05</span>
+        <input type="range" id="bandwidth" min="0" max="3" step="0.01" value="0.05">
+      </label>
+      <label>Noise: <span id="noiseVal">0.05</span>
+        <input type="range" id="noise" min="0" max="0.5" step="0.01" value="0.05">
+      </label>
+      <label>Fade: <span id="fadeVal">0.2</span>
+        <input type="range" id="fade" min="0" max="1" step="0.01" value="0.2">
+      </label>
+      <label>Crackle: <span id="crackleVal">0.0</span>
+        <input type="range" id="crackle" min="0" max="1" step="0.01" value="0.0">
+      </label>
+      <label>Tones: <span id="numTonesVal">1</span>
+        <input type="range" id="numTones" min="1" max="4" step="1" value="1">
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="chirpJitter"> Jitter
+      </label>
+    </div>
+
+    <div class="control-group">
+      <h2>Export</h2>
+      <button id="randomizeBtn">Randomize</button>
+      <button id="downloadBtn" disabled>Download WAV</button>
+    </div>
+
+  </section>
+</main>
+
+<script>
+const SAMPLE_RATE = 22050;
+
+function randRange(min, max) {
+  return min + Math.random() * (max - min);
+}
+function randInt(min, max) {
+  return Math.floor(randRange(min, max + 1));
+}
+function choice(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function smoothNoise(seed, t, speed) {
+  const x = t * speed + seed;
+  const i = Math.floor(x);
+  const f = x - i;
+  const a = Math.sin(i * 12.9898) * 43758.5453 % 1;
+  const b = Math.sin((i + 1) * 12.9898) * 43758.5453 % 1;
+  const smooth = f * f * (3 - 2 * f);
+  return a + (b - a) * smooth;
+}
+
+function buildPathFn(params, toneOffset) {
+  const { pathStyle, wobble, wobbleSpeed, hopRate, duration } = params;
+  const phase = randRange(0, Math.PI * 2);
+  const seedA = randRange(0, 1000);
+  const seedB = randRange(0, 1000);
+
+  if (pathStyle === 'straight') {
+    return (t) => 0;
+  }
+
+  if (pathStyle === 'wobble') {
+    return (t) => Math.sin(t * wobbleSpeed * 2 * Math.PI + phase) * wobble * 350;
+  }
+
+  if (pathStyle === 'randomWalk') {
+    return (t) => {
+      const n1 = (smoothNoise(seedA, t, wobbleSpeed) - 0.5) * 2;
+      const n2 = (smoothNoise(seedB, t, wobbleSpeed * 2.3) - 0.5) * 2;
+      return (n1 * 0.7 + n2 * 0.3) * wobble * 550;
+    };
+  }
+
+  if (pathStyle === 'stepped') {
+    const steps = [];
+    let t = 0;
+    while (t < duration + 1) {
+      steps.push({ start: t, val: randRange(-1, 1) * wobble * 500 });
+      t += 1 / hopRate;
+    }
+    return (t) => {
+      for (let i = steps.length - 1; i >= 0; i--) {
+        if (t >= steps[i].start) return steps[i].val;
+      }
+      return 0;
+    };
+  }
+
+  if (pathStyle === 'burstHop') {
+    const segs = [];
+    let t = 0;
+    while (t < duration + 1) {
+      const len = randRange(0.15, 0.8);
+      segs.push({ start: t, end: t + len, val: randRange(-1, 1) * wobble * 600 });
+      t += len + randRange(0, 0.15);
+    }
+    return (t) => {
+      for (const s of segs) {
+        if (t >= s.start && t < s.end) return s.val;
+      }
+      return null;
+    };
+  }
+
+  return (t) => 0;
+}
+
+function generateSignalBuffer(params) {
+  const {
+    baseFreq, wobble, drift, duration,
+    waveShape, noise, fade, chirpJitter,
+    bandwidth, crackle, numTones, demodMode
+  } = params;
+
+  const length = Math.floor(SAMPLE_RATE * duration);
+  const data = new Float32Array(length);
+  const sideSign = demodMode === 'lsb' ? -1 : 1;
+  const gainBoost = demodMode === 'iq' ? 2.6 : 1.8;
+
+  const fadePhase = randRange(0, Math.PI * 2);
+  const fadeSpeed = randRange(0.1, 0.6);
+  const jitterSeedA = randRange(0, 1000);
+  const jitterSeedB = randRange(0, 1000);
+  const bwSeed = randRange(0, 1000);
+  const bandGatePeriod = randRange(0.15, 0.6);
+  const bandGatePhase = randRange(0, Math.PI * 2);
+
+  let morsePattern = [];
+  if (waveShape === 'morseLike') {
+    let t = 0;
+    while (t < duration) {
+      const on = Math.random() > 0.3;
+      const segLen = on ? randRange(0.06, 0.3) : randRange(0.05, 0.25);
+      morsePattern.push({ start: t, end: t + segLen, on });
+      t += segLen;
+    }
+  }
+  function morseGateAt(tSec) {
+    for (const seg of morsePattern) {
+      if (tSec >= seg.start && tSec < seg.end) return seg.on ? 1 : 0;
+    }
+    return 1;
+  }
+
+  const tones = [];
+  const toneOffsets = [0];
+  for (let i = 1; i < numTones; i++) {
+    toneOffsets.push(randRange(-900, 900));
+  }
+  for (let i = 0; i < numTones; i++) {
+    tones.push({
+      offset: toneOffsets[i],
+      pathFn: buildPathFn(params, toneOffsets[i]),
+      phaseAccum: 0,
+      amp: i === 0 ? 1 : randRange(0.25, 0.6)
+    });
+  }
+
+  const crackleEvents = [];
+  if (crackle > 0) {
+    const numEvents = Math.floor(crackle * 40);
+    for (let i = 0; i < numEvents; i++) {
+      crackleEvents.push(randRange(0, duration));
+    }
+  }
+
+  for (let n = 0; n < length; n++) {
+    const t = n / SAMPLE_RATE;
+    const driftHz = drift * t;
+
+    let sampleSum = 0;
+
+    for (const tone of tones) {
+      let pathOffset = tone.pathFn(t);
+      if (pathOffset === null) continue;
+
+      if (chirpJitter) {
+        const j1 = (smoothNoise(jitterSeedA + tone.offset, t, 3) - 0.5) * 2;
+        const j2 = (smoothNoise(jitterSeedB + tone.offset, t, 0.7) - 0.5) * 2;
+        pathOffset += j1 * wobble * 400 + j2 * wobble * 150;
+      }
+
+      const bwWiggle = bandwidth > 0
+        ? (smoothNoise(bwSeed + tone.offset, t, 40) - 0.5) * bandwidth * 400
+        : 0;
+
+      const instFreq = Math.max(40, baseFreq + sideSign * (tone.offset + pathOffset + driftHz + bwWiggle));
+      tone.phaseAccum += (2 * Math.PI * instFreq) / SAMPLE_RATE;
+
+      let s = 0;
+      switch (waveShape) {
+        case 'square':
+          s = Math.sign(Math.sin(tone.phaseAccum));
+          break;
+        case 'sawtooth':
+          s = 2 * ((tone.phaseAccum / (2 * Math.PI)) % 1) - 1;
+          break;
+        case 'triangle':
+          s = Math.asin(Math.sin(tone.phaseAccum)) * (2 / Math.PI);
+          break;
+        case 'noiseAM': {
+          const carrier = Math.sin(tone.phaseAccum);
+          const am = 0.5 + 0.5 * Math.sin(t * randRange(2, 8) * 2 * Math.PI);
+          s = carrier * am;
+          break;
+        }
+        case 'morseLike': {
+          const gate = morseGateAt(t);
+          s = Math.sin(tone.phaseAccum) * gate;
+          break;
+        }
+        case 'broadband': {
+          const gate = 0.55 + 0.45 * Math.sin(t / bandGatePeriod * 2 * Math.PI + bandGatePhase);
+          s = Math.sin(tone.phaseAccum) * gate;
+          break;
+        }
+        default:
+          s = Math.sin(tone.phaseAccum);
+      }
+
+      sampleSum += s * tone.amp;
+    }
+
+    const fadeEnv = 1 - fade * (0.5 + 0.5 * Math.sin(t * fadeSpeed * 2 * Math.PI + fadePhase));
+    const noiseSample = (Math.random() * 2 - 1) * noise;
+
+    const attack = Math.min(1, t / 0.02);
+    const release = Math.min(1, (duration - t) / 0.02);
+    const envelope = Math.min(attack, release);
+
+    data[n] = (sampleSum * 0.55 * fadeEnv * gainBoost + noiseSample) * envelope;
+  }
+
+  for (const ct of crackleEvents) {
+    const idx = Math.floor(ct * SAMPLE_RATE);
+    const clickLen = randInt(4, 30);
+    const clickAmp = randRange(0.3, 0.9);
+    for (let k = 0; k < clickLen && idx + k < length; k++) {
+      data[idx + k] += (Math.random() * 2 - 1) * clickAmp * (1 - k / clickLen);
+    }
+  }
+
+  for (let i = 0; i < length; i++) {
+    if (data[i] > 1) data[i] = 1;
+    if (data[i] < -1) data[i] = -1;
+  }
+
+  return { data, sampleRate: SAMPLE_RATE, duration };
+}
+
+let audioCtx = null;
+let currentSource = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+function playBuffer(bufferInfo, onEnded) {
+  const ctx = getAudioContext();
+  const buffer = ctx.createBuffer(1, bufferInfo.data.length, bufferInfo.sampleRate);
+  buffer.copyToChannel(bufferInfo.data, 0);
+
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+
+  const gain = ctx.createGain();
+  gain.gain.value = 0.8;
+
+  source.connect(gain).connect(ctx.destination);
+  source.onended = () => {
+    if (onEnded) onEnded();
+  };
+  source.start();
+  currentSource = source;
+  return source;
+}
+
+function stopPlayback() {
+  if (currentSource) {
+    try { currentSource.stop(); } catch (e) {}
+    currentSource = null;
+  }
+}
+
+const FFT_SIZE = 1024;
+const WATERFALL_ROWS = 320;
+
+function fft(re, im) {
+  const n = re.length;
+  if (n <= 1) return;
+
+  const half = n / 2;
+  const evenRe = new Float32Array(half), evenIm = new Float32Array(half);
+  const oddRe = new Float32Array(half), oddIm = new Float32Array(half);
+
+  for (let i = 0; i < half; i++) {
+    evenRe[i] = re[2 * i]; evenIm[i] = im[2 * i];
+    oddRe[i] = re[2 * i + 1]; oddIm[i] = im[2 * i + 1];
+  }
+
+  fft(evenRe, evenIm);
+  fft(oddRe, oddIm);
+
+  for (let k = 0; k < half; k++) {
+    const angle = -2 * Math.PI * k / n;
+    const cos = Math.cos(angle), sin = Math.sin(angle);
+    const tRe = cos * oddRe[k] - sin * oddIm[k];
+    const tIm = sin * oddRe[k] + cos * oddIm[k];
+    re[k] = evenRe[k] + tRe;
+    im[k] = evenIm[k] + tIm;
+    re[k + half] = evenRe[k] - tRe;
+    im[k + half] = evenIm[k] - tIm;
+  }
+}
+
+function computeSpectrumFrame(samples, startIdx, size) {
+  const re = new Float32Array(size);
+  const im = new Float32Array(size);
+  for (let i = 0; i < size; i++) {
+    const idx = startIdx + i;
+    const s = idx < samples.length ? samples[idx] : 0;
+    const w = 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (size - 1));
+    re[i] = s * w;
+    im[i] = 0;
+  }
+  fft(re, im);
+  const bins = size / 2;
+  const mags = new Float32Array(bins);
+  for (let i = 0; i < bins; i++) {
+    mags[i] = Math.sqrt(re[i] * re[i] + im[i] * im[i]);
+  }
+  return mags;
+}
+
+function magToColor(mag) {
+  const norm = Math.max(0, Math.min(1, (Math.log10(1 + mag) - 0.35) / 1.65));
+  let r, g, b;
+  if (norm < 0.33) {
+    const t = norm / 0.33;
+    r = 0; g = Math.floor(t * 180); b = Math.floor(60 + t * 195);
+  } else if (norm < 0.66) {
+    const t = (norm - 0.33) / 0.33;
+    r = Math.floor(t * 255); g = Math.floor(180 + t * 75); b = Math.floor(255 - t * 255);
+  } else {
+    const t = (norm - 0.66) / 0.34;
+    r = 255; g = Math.floor(255 - t * 200); b = 0;
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+class WaterfallRenderer {
+  constructor(waterfallCanvas, spectrumCanvas, rulerEl) {
+    this.wfCanvas = waterfallCanvas;
+    this.wfCtx = waterfallCanvas.getContext('2d');
+    this.specCanvas = spectrumCanvas;
+    this.specCtx = spectrumCanvas.getContext('2d');
+    this.rulerEl = rulerEl;
+    this.rows = [];
+    this.maxFreqShown = 12000;
+  }
+
+  renderFromBuffer(bufferInfo) {
+    const { data, sampleRate } = bufferInfo;
+    const size = FFT_SIZE;
+    const hop = Math.max(1, Math.floor(data.length / WATERFALL_ROWS));
+
+    this.rows = [];
+    for (let r = 0; r < WATERFALL_ROWS; r++) {
+      const startIdx = r * hop;
+      if (startIdx >= data.length) break;
+      const mags = computeSpectrumFrame(data, startIdx, size);
+      this.rows.push(mags);
+    }
+
+    this.binHz = sampleRate / size;
+    this.drawWaterfall();
+    this.drawLastSpectrum();
+    this.drawRuler();
+  }
+
+  binsToShowCount() {
+    return Math.min(this.rows[0] ? this.rows[0].length : 0, Math.ceil(this.maxFreqShown / this.binHz));
+  }
+
+  drawWaterfall() {
+    const ctx = this.wfCtx;
+    const w = this.wfCanvas.width;
+    const h = this.wfCanvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const numRows = this.rows.length;
+    if (numRows === 0) {
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, w, h);
+      return;
+    }
+
+    const rowHeight = h / numRows;
+    const binsToShow = this.binsToShowCount();
+    const binWidth = w / binsToShow;
+
+    for (let r = 0; r < numRows; r++) {
+      const mags = this.rows[r];
+      const y = r * rowHeight;
+      for (let b = 0; b < binsToShow; b++) {
+        ctx.fillStyle = magToColor(mags[b]);
+        ctx.fillRect(b * binWidth, y, binWidth + 1, rowHeight + 1);
+      }
+    }
+  }
+
+  drawLastSpectrum() {
+    const ctx = this.specCtx;
+    const w = this.specCanvas.width;
+    const h = this.specCanvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+
+    if (this.rows.length === 0) return;
+    const mags = this.rows[this.rows.length - 1];
+    const binsToShow = this.binsToShowCount();
+    const binWidth = w / binsToShow;
+
+    ctx.strokeStyle = '#00ff00';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let b = 0; b < binsToShow; b++) {
+      const norm = Math.min(1, Math.log10(1 + mags[b]) / 2.0);
+      const y = h - norm * h;
+      const x = b * binWidth;
+      if (b === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  drawRuler() {
+    if (!this.rulerEl) return;
+    const binsToShow = this.binsToShowCount();
+    const maxHz = binsToShow * this.binHz;
+    const steps = 7;
+    let html = '';
+    for (let i = 0; i <= steps; i++) {
+      const hz = Math.round((maxHz * i) / steps);
+      html += `<span>${hz} Hz</span>`;
+    }
+    this.rulerEl.innerHTML = html;
+  }
+
+  clear() {
+    this.wfCtx.fillStyle = '#000';
+    this.wfCtx.fillRect(0, 0, this.wfCanvas.width, this.wfCanvas.height);
+    this.specCtx.fillStyle = '#000';
+    this.specCtx.fillRect(0, 0, this.specCanvas.width, this.specCanvas.height);
+    this.rows = [];
+  }
+}
+
+function encodeWAV(bufferInfo) {
+  const { data, sampleRate } = bufferInfo;
+  const numChannels = 1;
+  const bitsPerSample = 16;
+  const bytesPerSample = bitsPerSample / 8;
+  const blockAlign = numChannels * bytesPerSample;
+  const byteRate = sampleRate * blockAlign;
+  const dataSize = data.length * bytesPerSample;
+
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+
+  function writeString(offset, str) {
+    for (let i = 0; i < str.length; i++) {
+      view.setUint8(offset + i, str.charCodeAt(i));
+    }
+  }
+
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + dataSize, true);
+  writeString(8, 'WAVE');
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, byteRate, true);
+  view.setUint16(32, blockAlign, true);
+  view.setUint16(34, bitsPerSample, true);
+  writeString(36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  let offset = 44;
+  for (let i = 0; i < data.length; i++) {
+    const s = Math.max(-1, Math.min(1, data[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    offset += 2;
+  }
+
+  return new Blob([view], { type: 'audio/wav' });
+}
+
+function downloadWAV(bufferInfo, filename) {
+  const blob = encodeWAV(bufferInfo);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename || 'waterfall-playground-signal.wav';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const waterfallCanvas = document.getElementById('waterfall');
+  const spectrumCanvas = document.getElementById('spectrum');
+  const rulerEl = document.getElementById('ruler');
+  const renderer = new WaterfallRenderer(waterfallCanvas, spectrumCanvas, rulerEl);
+  renderer.clear();
+
+  const els = {
+    pathStyle: document.getElementById('pathStyle'),
+    baseFreq: document.getElementById('baseFreq'),
+    wobble: document.getElementById('wobble'),
+    wobbleSpeed: document.getElementById('wobbleSpeed'),
+    drift: document.getElementById('drift'),
+    hopRate: document.getElementById('hopRate'),
+    duration: document.getElementById('duration'),
+    waveShape: document.getElementById('waveShape'),
+    bandwidth: document.getElementById('bandwidth'),
+    noise: document.getElementById('noise'),
+    fade: document.getElementById('fade'),
+    crackle: document.getElementById('crackle'),
+    numTones: document.getElementById('numTones'),
+    chirpJitter: document.getElementById('chirpJitter'),
+  };
+
+  const readouts = {
+    baseFreq: document.getElementById('baseFreqVal'),
+    wobble: document.getElementById('wobbleVal'),
+    wobbleSpeed: document.getElementById('wobbleSpeedVal'),
+    drift: document.getElementById('driftVal'),
+    hopRate: document.getElementById('hopRateVal'),
+    duration: document.getElementById('durationVal'),
+    bandwidth: document.getElementById('bandwidthVal'),
+    noise: document.getElementById('noiseVal'),
+    fade: document.getElementById('fadeVal'),
+    crackle: document.getElementById('crackleVal'),
+    numTones: document.getElementById('numTonesVal'),
+  };
+
+  const generateBtn = document.getElementById('generateBtn');
+  const applyBtn = document.getElementById('applyBtn');
+  const randomizeBtn = document.getElementById('randomizeBtn');
+  const playBtn = document.getElementById('playBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const freqReadout = document.getElementById('freqReadout');
+  const demodModeEl = document.getElementById('demodMode');
+  const filterBwEl = document.getElementById('filterBandwidth');
+
+  const BW_OPTIONS = {
+    usb: [3000, 4500, 6000, 9000, 12000],
+    lsb: [3000, 4500, 6000, 9000, 12000],
+    iq: [3000, 6000, 9000, 12000, 16000, 20000],
+  };
+
+  function populateBandwidthOptions() {
+    const mode = demodModeEl.value;
+    const opts = BW_OPTIONS[mode];
+    filterBwEl.innerHTML = opts.map(hz =>
+      `<option value="${hz}">${hz >= 1000 ? (hz / 1000) + ' kHz' : hz + ' Hz'}</option>`
+    ).join('');
+    filterBwEl.value = opts[Math.floor(opts.length / 2)];
+  }
+  populateBandwidthOptions();
+  demodModeEl.addEventListener('change', populateBandwidthOptions);
+
+  let currentBuffer = null;
+
+  function syncReadouts() {
+    readouts.baseFreq.textContent = els.baseFreq.value;
+    readouts.wobble.textContent = parseFloat(els.wobble.value).toFixed(2);
+    readouts.wobbleSpeed.textContent = parseFloat(els.wobbleSpeed.value).toFixed(2);
+    readouts.drift.textContent = els.drift.value;
+    readouts.hopRate.textContent = parseFloat(els.hopRate.value).toFixed(1);
+    readouts.duration.textContent = parseFloat(els.duration.value).toFixed(1);
+    readouts.bandwidth.textContent = parseFloat(els.bandwidth.value).toFixed(2);
+    readouts.noise.textContent = parseFloat(els.noise.value).toFixed(2);
+    readouts.fade.textContent = parseFloat(els.fade.value).toFixed(2);
+    readouts.crackle.textContent = parseFloat(els.crackle.value).toFixed(2);
+    readouts.numTones.textContent = els.numTones.value;
+    freqReadout.textContent = `14.${String(els.baseFreq.value).padStart(3, '0')} MHz USB`;
+  }
+
+  Object.values(els).forEach(el => {
+    el.addEventListener('input', syncReadouts);
+  });
+  syncReadouts();
+
+  function getParams() {
+    return {
+      pathStyle: els.pathStyle.value,
+      baseFreq: parseFloat(els.baseFreq.value),
+      wobble: parseFloat(els.wobble.value),
+      wobbleSpeed: parseFloat(els.wobbleSpeed.value),
+      drift: parseFloat(els.drift.value),
+      hopRate: parseFloat(els.hopRate.value),
+      duration: parseFloat(els.duration.value),
+      waveShape: els.waveShape.value,
+      bandwidth: parseFloat(els.bandwidth.value),
+      noise: parseFloat(els.noise.value),
+      fade: parseFloat(els.fade.value),
+      crackle: parseFloat(els.crackle.value),
+      numTones: parseInt(els.numTones.value, 10),
+      chirpJitter: els.chirpJitter.checked,
+      demodMode: document.getElementById('demodMode').value,
+      filterBandwidth: parseFloat(filterBwEl.value),
+    };
+  }
+
+  function generate() {
+    const params = getParams();
+    currentBuffer = generateSignalBuffer(params);
+    renderer.maxFreqShown = params.filterBandwidth;
+    renderer.renderFromBuffer(currentBuffer);
+    playBtn.disabled = false;
+    downloadBtn.disabled = false;
+  }
+
+  function randomizeControls() {
+    const pathStyles = ['straight', 'wobble', 'randomWalk', 'stepped', 'burstHop'];
+    els.pathStyle.value = choice(pathStyles);
+
+    els.baseFreq.value = Math.round(randRange(300, 2200));
+    els.wobble.value = randRange(0, 1).toFixed(2);
+    els.wobbleSpeed.value = randRange(0.1, 4).toFixed(2);
+    els.drift.value = Math.round(randRange(-350, 350) * (Math.random() > 0.5 ? 1 : 0.15));
+    els.hopRate.value = randRange(0.3, 6).toFixed(1);
+    els.duration.value = (Math.round(randRange(2, 8) * 2) / 2).toFixed(1);
+
+    const shapes = ['sine', 'square', 'sawtooth', 'triangle', 'noiseAM', 'morseLike', 'broadband'];
+    els.waveShape.value = choice(shapes);
+
+    const wide = els.waveShape.value === 'broadband' || Math.random() > 0.75;
+    els.bandwidth.value = (wide ? randRange(0.8, 2.5) : randRange(0, 0.35)).toFixed(2);
+    els.noise.value = randRange(0, 0.3).toFixed(2);
+    els.fade.value = randRange(0, 0.8).toFixed(2);
+    els.crackle.value = (Math.random() > 0.6 ? randRange(0, 0.6) : 0).toFixed(2);
+    els.numTones.value = Math.random() > 0.65 ? randInt(2, 3) : 1;
+    els.chirpJitter.checked = Math.random() > 0.7;
+
+    syncReadouts();
+  }
+
+  generateBtn.addEventListener('click', () => {
+    randomizeControls();
+    generate();
+  });
+
+  applyBtn.addEventListener('click', () => {
+    generate();
+  });
+
+  let autoApplyTimer = null;
+  function scheduleAutoApply() {
+    clearTimeout(autoApplyTimer);
+    autoApplyTimer = setTimeout(() => generate(), 150);
+  }
+  [...Object.values(els), demodModeEl, filterBwEl].forEach(el => {
+    el.addEventListener('input', scheduleAutoApply);
+    el.addEventListener('change', scheduleAutoApply);
+  });
+
+  randomizeBtn.addEventListener('click', () => {
+    randomizeControls();
+    if (currentBuffer) generate();
+  });
+
+  playBtn.addEventListener('click', () => {
+    if (!currentBuffer) return;
+    playBtn.disabled = true;
+    stopBtn.disabled = false;
+    playBuffer(currentBuffer, () => {
+      playBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  });
+
+  stopBtn.addEventListener('click', () => {
+    stopPlayback();
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!currentBuffer) return;
+    const ts = Date.now();
+    downloadWAV(currentBuffer, `waterfall-signal-${ts}.wav`);
+  });
+});
+</script>
+</body>
+</html>
