@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CQindex</title>
+<style>
+  :root {
+    --bg: #090b10;
+    --surface: #12161f;
+    --surface-2: #1a2030;
+    --border: #2a3348;
+    --text: #eef2f8;
+    --muted: #8b97ad;
+    --accent: #3dd6c6;
+    --danger: #ff5c5c;
+    --radius: 14px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    padding: 20px 16px 48px;
+    line-height: 1.45;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 650;
+    letter-spacing: -0.6px;
+    background: linear-gradient(135deg, #3dd6c6 0%, #5b8def 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p {
+    margin-top: 6px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    letter-spacing: 0.2px;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  #micBtn {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+  }
+  #micBtn:active { transform: scale(0.96); }
+  #micBtn.active {
+    background: var(--danger);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 0 6px rgba(255, 92, 92, 0.18);
+  }
+
+  .status {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .status.live { color: var(--accent); }
+
+  .auto-correct {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: var(--muted);
+    user-select: none;
+  }
+  .auto-correct input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .decoded-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    min-height: 130px;
+    margin-bottom: 10px;
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    word-break: break-word;
+    white-space: pre-wrap;
+    letter-spacing: 0.3px;
+  }
+  .decoded-box .hl {
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+
+  .c-cq   { background: #e74c3c; color: #fff; }
+  .c-de   { background: #3498db; color: #fff; }
+  .c-k    { background: #2ecc71; color: #04210e; }
+  .c-ar   { background: #9b59b6; color: #fff; }
+  .c-sk   { background: #e67e22; color: #fff; }
+  .c-bt   { background: #1abc9c; color: #021a15; }
+  .c-sos  { background: #c0392b; color: #fff; animation: pulse-sos 1s infinite; }
+  .c-qrz  { background: #f1c40f; color: #1a1500; }
+  .c-qth  { background: #16a085; color: #fff; }
+  .c-qsl  { background: #2980b9; color: #fff; }
+  .c-qso  { background: #8e44ad; color: #fff; }
+  .c-qrm  { background: #d35400; color: #fff; }
+  .c-qrn  { background: #7f8c8d; color: #fff; }
+  .c-qrt  { background: #c0392b; color: #fff; filter: brightness(1.15); }
+  .c-qrv  { background: #27ae60; color: #fff; }
+  .c-qrx  { background: #f39c12; color: #1a1000; }
+  .c-qsb  { background: #1abc9c; color: #021a15; filter: hue-rotate(40deg); }
+  .c-qsy  { background: #3498db; color: #fff; filter: hue-rotate(-30deg); }
+  .c-qrp  { background: #e74c3c; color: #fff; filter: hue-rotate(20deg); }
+  .c-qro  { background: #e74c3c; color: #fff; filter: hue-rotate(-40deg) brightness(1.1); }
+  .c-qrs  { background: #9b59b6; color: #fff; filter: hue-rotate(50deg); }
+  .c-qtc  { background: #34495e; color: #fff; }
+  .c-qtr  { background: #16a085; color: #fff; filter: brightness(1.25); }
+  .c-qrg  { background: #2980b9; color: #fff; filter: brightness(1.2); }
+  .c-qra  { background: #8e44ad; color: #fff; filter: brightness(1.15); }
+  .c-73   { background: #2ecc71; color: #04210e; filter: hue-rotate(-25deg); }
+  .c-88   { background: #e91e63; color: #fff; }
+  .c-agn  { background: #00bcd4; color: #002028; }
+  .c-bk   { background: #ff5722; color: #fff; }
+  .c-rst  { background: #607d8b; color: #fff; }
+  .c-dx   { background: #ff9800; color: #1a0e00; }
+  .c-om   { background: #3f51b5; color: #fff; }
+  .c-yl   { background: #e91e63; color: #fff; filter: hue-rotate(30deg); }
+  .c-call { background: #00e5ff; color: #002028; }
+
+  @keyframes pulse-sos {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.65; }
+  }
+
+  .wpm {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+    letter-spacing: 0.3px;
+  }
+
+  .legend {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 22px;
+  }
+  .legend h3 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .operator-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .op-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .op-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+  .op-card h4 {
+    font-size: 1rem;
+    font-weight: 650;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+  .op-card .row {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin: 3px 0;
+  }
+  .op-card .row strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>CQindex</h1>
+    <p>Live Morse decoder from microphone</p>
+  </header>
+
+  <div class="controls">
+    <button id="micBtn">MIC</button>
+    <div class="status" id="status">Tap mic to start</div>
+    <div class="auto-correct">
+      <input type="checkbox" id="autoCorrect">
+      <label for="autoCorrect">Auto-correct</label>
+    </div>
+  </div>
+
+  <div class="decoded-box" id="decoded">Waiting for signal…</div>
+  <div class="wpm" id="wpmInfo"></div>
+
+  <div class="legend">
+    <h3>Color coding</h3>
+    <div class="legend-grid" id="legend"></div>
+  </div>
+
+  <div class="operator-cards" id="opCards"></div>
+
+<script>
+const MORSE = {
+  '.-':'A','-...':'B','-.-.':'C','-..':'D','.':'E','..-.':'F',
+  '--.':'G','....':'H','..':'I','.---':'J','-.-':'K','.-..':'L',
+  '--':'M','-.':'N','---':'O','.--.':'P','--.-':'Q','.-.':'R',
+  '...':'S','-':'T','..-':'U','...-':'V','.--':'W','-..-':'X',
+  '-.--':'Y','--..':'Z',
+  '-----':'0','.----':'1','..---':'2','...--':'3','....-':'4',
+  '.....':'5','-....':'6','--...':'7','---..':'8','----.':'9',
+  '.-.-.-':'.','--..--':',','..--..':'?','-.-.--':'!','-....-':'-',
+  '-..-.':'/','.-..-.':'"','.----.':"'",'-.--.':'(','-.--.-':')',
+  '.-...':'&','---...':':','-.-.-.':';','-...-':'=','.-.-.':'+',
+  '..--.-':'_','...-..-':'$','.--.-.':'@'
+};
+
+const PROSIGNS = {
+  '.-.-.':'AR', '-...-':'BT', '...-.-':'SK', '...---...':'SOS',
+  '-.-':'K', '-.--.':'KN'
+};
+
+/* Every code has its own unique class + color */
+const CODES = {
+  'CQ':  {cls:'c-cq',  mean:'Calling any station'},
+  'DE':  {cls:'c-de',  mean:'From / This is'},
+  'K':   {cls:'c-k',   mean:'Go ahead / Over'},
+  'AR':  {cls:'c-ar',  mean:'End of transmission'},
+  'SK':  {cls:'c-sk',  mean:'End of contact'},
+  'BT':  {cls:'c-bt',  mean:'Break / Separator'},
+  'SOS': {cls:'c-sos', mean:'Distress signal'},
+  'QRZ': {cls:'c-qrz', mean:'Who is calling me?'},
+  'QTH': {cls:'c-qth', mean:'Location'},
+  'QSL': {cls:'c-qsl', mean:'Acknowledged / Received'},
+  'QSO': {cls:'c-qso', mean:'Contact / Conversation'},
+  'QRM': {cls:'c-qrm', mean:'Man-made interference'},
+  'QRN': {cls:'c-qrn', mean:'Natural interference'},
+  'QRT': {cls:'c-qrt', mean:'Stop transmitting'},
+  'QRV': {cls:'c-qrv', mean:'Ready / Available'},
+  'QRX': {cls:'c-qrx', mean:'Stand by'},
+  'QSB': {cls:'c-qsb', mean:'Signal fading'},
+  'QSY': {cls:'c-qsy', mean:'Change frequency'},
+  'QRP': {cls:'c-qrp', mean:'Low power'},
+  'QRO': {cls:'c-qro', mean:'High power'},
+  'QRS': {cls:'c-qrs', mean:'Send more slowly'},
+  'QTC': {cls:'c-qtc', mean:'Message / Traffic'},
+  'QTR': {cls:'c-qtr', mean:'Correct time'},
+  'QRG': {cls:'c-qrg', mean:'Frequency'},
+  'QRA': {cls:'c-qra', mean:'Station name / identification'},
+  '73':  {cls:'c-73',  mean:'Best regards'},
+  '88':  {cls:'c-88',  mean:'Love and kisses'},
+  'AGN': {cls:'c-agn', mean:'Again'},
+  'BK':  {cls:'c-bk',  mean:'Break'},
+  'RST': {cls:'c-rst', mean:'Readability, Strength, Tone'},
+  'DX':  {cls:'c-dx',  mean:'Long-distance contact'},
+  'OM':  {cls:'c-om',  mean:'Male operator'},
+  'YL':  {cls:'c-yl',  mean:'Female operator'}
+};
+
+const AUTOCORRECT = {
+  'CE':'CQ', 'SO':'SOS', 'S0S':'SOS', 'BK':'BT',
+  'DI':'DE', 'DA':'DE', 'R':'AR', 'SKK':'SK'
+};
+
+const legendEl = document.getElementById('legend');
+Object.entries(CODES).forEach(([code, info]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="swatch ${info.cls}"></div><span><b>${code}</b> – ${info.mean}</span>`;
+  legendEl.appendChild(item);
+});
+const callItem = document.createElement('div');
+callItem.className = 'legend-item';
+callItem.innerHTML = `<div class="swatch c-call"></div><span><b>Callsign</b> – 5-6 char detected</span>`;
+legendEl.appendChild(callItem);
+
+let audioCtx, analyser, micStream, source, isListening = false;
+let rawText = '';
+let unitMs = 80;
+let toneOn = false;
+let onStart = 0, offStart = 0;
+let currentSymbol = '';
+let lookedUp = new Set();
+
+const micBtn = document.getElementById('micBtn');
+const statusEl = document.getElementById('status');
+const decodedEl = document.getElementById('decoded');
+const wpmInfo = document.getElementById('wpmInfo');
+const opCards = document.getElementById('opCards');
+const autoCb = document.getElementById('autoCorrect');
+
+async function startMic() {
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+    });
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    source = audioCtx.createMediaStreamSource(micStream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyser.smoothingTimeConstant = 0.3;
+    source.connect(analyser);
+
+    isListening = true;
+    micBtn.classList.add('active');
+    micBtn.textContent = 'STOP';
+    statusEl.textContent = 'Listening…';
+    statusEl.classList.add('live');
+    requestAnimationFrame(processAudio);
+  } catch (e) {
+    statusEl.textContent = 'Microphone permission denied';
+    console.error(e);
+  }
+}
+
+function stopMic() {
+  isListening = false;
+  if (micStream) micStream.getTracks().forEach(t => t.stop());
+  if (audioCtx) audioCtx.close();
+  micBtn.classList.remove('active');
+  micBtn.textContent = 'MIC';
+  statusEl.textContent = 'Stopped';
+  statusEl.classList.remove('live');
+}
+
+micBtn.addEventListener('click', () => {
+  if (isListening) stopMic(); else startMic();
+});
+
+function processAudio() {
+  if (!isListening) return;
+
+  const buf = new Float32Array(analyser.fftSize);
+  analyser.getFloatTimeDomainData(buf);
+
+  let sum = 0;
+  for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+  const rms = Math.sqrt(sum / buf.length);
+
+  const threshold = 0.02;
+  const now = performance.now();
+  const isTone = rms > threshold;
+
+  if (isTone && !toneOn) {
+    toneOn = true;
+    onStart = now;
+    handleSpace(now - offStart);
+  } else if (!isTone && toneOn) {
+    toneOn = false;
+    offStart = now;
+    handleTone(now - onStart);
+  }
+
+  if (!toneOn && (now - offStart) > unitMs * 7 && currentSymbol) {
+    flushSymbol();
+    rawText += ' ';
+    updateDisplay();
+  }
+
+  requestAnimationFrame(processAudio);
+}
+
+function handleTone(dur) {
+  if (dur < unitMs * 2) {
+    currentSymbol += '.';
+    unitMs = unitMs * 0.9 + dur * 0.1;
+  } else {
+    currentSymbol += '-';
+    unitMs = unitMs * 0.9 + (dur / 3) * 0.1;
+  }
+  unitMs = Math.max(40, Math.min(200, unitMs));
+  updateWpm();
+}
+
+function handleSpace(dur) {
+  if (dur < unitMs * 2) {
+    // intra-character
+  } else if (dur < unitMs * 5) {
+    flushSymbol();
+  } else {
+    flushSymbol();
+    rawText += ' ';
+  }
+  updateDisplay();
+}
+
+function flushSymbol() {
+  if (!currentSymbol) return;
+  const ch = MORSE[currentSymbol] || PROSIGNS[currentSymbol] || '';
+  if (ch) rawText += ch;
+  currentSymbol = '';
+}
+
+function updateWpm() {
+  const wpm = Math.round(1200 / unitMs);
+  wpmInfo.textContent = `~${wpm} WPM  ·  unit ${Math.round(unitMs)} ms`;
+}
+
+function applyAutoCorrect(tokens) {
+  if (!autoCb.checked) return tokens;
+  return tokens.map(t => AUTOCORRECT[t.toUpperCase()] || t);
+}
+
+function highlightText(text) {
+  const parts = text.split(/(\s+)/);
+  let html = '';
+
+  parts.forEach(p => {
+    if (/^\s+$/.test(p)) {
+      html += p;
+      return;
+    }
+    const up = p.toUpperCase();
+
+    if (CODES[up]) {
+      html += `<span class="hl ${CODES[up].cls}">${p}</span>`;
+    } else if (/^[A-Z0-9]{5,6}$/i.test(p) && /[A-Z]/i.test(p) && /\d/.test(p)) {
+      html += `<span class="hl c-call">${p}</span>`;
+      lookupCallsign(up);
+    } else {
+      html += p;
+    }
+  });
+  return html;
+}
+
+function updateDisplay() {
+  let display = rawText;
+  if (autoCb.checked) {
+    const toks = rawText.trim().split(/\s+/);
+    display = applyAutoCorrect(toks).join(' ');
+  }
+  decodedEl.innerHTML = highlightText(display) || 'Waiting for signal…';
+}
+
+async function lookupCallsign(call) {
+  if (lookedUp.has(call)) return;
+  lookedUp.add(call);
+
+  try {
+    const res = await fetch(`https://callook.info/${call}/json`, { mode: 'cors' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.status !== 'VALID') return;
+
+    const name = data.name || '';
+    const grid = data.location?.gridsquare || '';
+    const cls  = data.current?.operClass || data.type || '';
+    const addr = data.address ? `${data.address.line1 || ''} ${data.address.line2 || ''}`.trim() : '';
+    const lat  = data.location?.latitude;
+    const lon  = data.location?.longitude;
+
+    if (!name && !grid) return;
+
+    const card = document.createElement('div');
+    card.className = 'op-card';
+    card.innerHTML = `
+      <h4>${call}</h4>
+      ${name ? `<div class="row"><strong>Name:</strong> ${name}</div>` : ''}
+      ${cls  ? `<div class="row"><strong>Class/Type:</strong> ${cls}</div>` : ''}
+      ${grid ? `<div class="row"><strong>Grid:</strong> ${grid}</div>` : ''}
+      ${addr ? `<div class="row"><strong>Addr:</strong> ${addr}</div>` : ''}
+      ${lat && lon ? `<div class="row"><strong>Coords:</strong> ${lat}, ${lon}</div>` : ''}
+    `;
+    opCards.prepend(card);
+  } catch (e) {
+    console.log('Lookup failed for', call, e.message);
+  }
+}
+
+autoCb.addEventListener('change', updateDisplay);
+
+let pressTimer;
+micBtn.addEventListener('touchstart', () => {
+  pressTimer = setTimeout(() => {
+    rawText = '';
+    lookedUp.clear();
+    opCards.innerHTML = '';
+    updateDisplay();
+  }, 800);
+});
+micBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
+</script>
+</body>
+</html>
