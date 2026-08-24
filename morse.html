@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,13 +18,10 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100dvh;
-    padding: 20px 16px 48px;
-    line-height: 1.45;
+    background: var(--bg); color: var(--text);
+    min-height: 100dvh; padding: 20px 16px 48px; line-height: 1.45;
   }
-  header { text-align: center; margin-bottom: 24px; }
+  header { text-align: center; margin-bottom: 20px; }
   header h1 {
     font-size: 1.75rem; font-weight: 650; letter-spacing: -0.6px;
     background: linear-gradient(135deg, #3dd6c6 0%, #5b8def 100%);
@@ -34,7 +29,7 @@
   }
   header p { margin-top: 6px; font-size: 0.8125rem; color: var(--muted); }
 
-  .controls { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .controls { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 16px; }
 
   #micBtn {
     width: 76px; height: 76px; border-radius: 50%;
@@ -51,18 +46,23 @@
     box-shadow: 0 0 0 6px rgba(255, 92, 92, 0.18);
   }
 
-  .status { font-size: 0.8125rem; color: var(--muted); font-weight: 500; }
+  .status { font-size: 0.8125rem; color: var(--muted); font-weight: 500; text-align: center; }
   .status.live { color: var(--accent); }
 
   .level-wrap {
-    width: 100%; max-width: 260px;
-    height: 6px; background: var(--surface);
-    border-radius: 3px; overflow: hidden; border: 1px solid var(--border);
+    width: 100%; max-width: 260px; height: 6px;
+    background: var(--surface); border-radius: 3px; overflow: hidden; border: 1px solid var(--border);
   }
   #levelBar {
     height: 100%; width: 0%;
     background: linear-gradient(90deg, #3dd6c6, #5b8def);
-    transition: width 0.08s linear;
+    transition: width 0.05s linear;
+  }
+
+  .current-sym {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.95rem; color: var(--accent); min-height: 1.3em;
+    letter-spacing: 3px; text-align: center;
   }
 
   .auto-correct {
@@ -73,14 +73,13 @@
 
   .decoded-box {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 18px; min-height: 130px;
-    margin-bottom: 10px; font-family: "SF Mono", "Menlo", "Consolas", monospace;
-    font-size: 1.05rem; line-height: 1.7; word-break: break-word;
+    border-radius: var(--radius); padding: 16px; min-height: 110px;
+    margin-bottom: 8px; font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 1.05rem; line-height: 1.65; word-break: break-word;
     white-space: pre-wrap; letter-spacing: 0.3px;
   }
   .decoded-box .hl { padding: 2px 6px; border-radius: 5px; font-weight: 600; }
 
-  /* Unique colors */
   .c-cq  { background:#e74c3c; color:#fff; }
   .c-de  { background:#3498db; color:#fff; }
   .c-k   { background:#2ecc71; color:#04210e; }
@@ -94,7 +93,7 @@
   .c-qso { background:#8e44ad; color:#fff; }
   .c-qrm { background:#d35400; color:#fff; }
   .c-qrn { background:#7f8c8d; color:#fff; }
-  .c-qrt { background:#e74c3c; color:#fff; filter:brightness(1.2); }
+  .c-qrt { background:#e74c3c; color:#fff; filter:brightness(1.25); }
   .c-qrv { background:#27ae60; color:#fff; }
   .c-qrx { background:#f39c12; color:#1a1000; }
   .c-qsb { background:#00cec9; color:#00302e; }
@@ -118,31 +117,36 @@
 
   @keyframes pulse-sos { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
-  .wpm { text-align:center; font-size:0.75rem; color:var(--muted); margin-bottom:20px; }
+  .wpm { text-align:center; font-size:0.75rem; color:var(--muted); margin-bottom:16px; }
 
   .legend {
     background:var(--surface); border:1px solid var(--border);
-    border-radius:var(--radius); padding:18px; margin-bottom:22px;
+    border-radius:var(--radius); padding:16px; margin-bottom:20px;
   }
   .legend h3 {
     font-size:0.8125rem; font-weight:600; text-transform:uppercase;
-    letter-spacing:0.8px; color:var(--muted); margin-bottom:14px;
+    letter-spacing:0.8px; color:var(--muted); margin-bottom:12px;
   }
-  .legend-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
-  .legend-item { display:flex; align-items:flex-start; gap:9px; font-size:0.72rem; line-height:1.35; }
-  .swatch { width:14px; height:14px; border-radius:3px; flex-shrink:0; margin-top:2px; }
+  .legend-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px 12px; }
+  .legend-item { display:flex; align-items:flex-start; gap:8px; font-size:0.72rem; line-height:1.35; }
+  .swatch { width:13px; height:13px; border-radius:3px; flex-shrink:0; margin-top:2px; }
 
   .operator-cards { display:flex; flex-direction:column; gap:12px; }
   .op-card {
     background:var(--surface); border:1px solid var(--border);
-    border-radius:var(--radius); padding:16px 18px; position:relative; overflow:hidden;
+    border-radius:var(--radius); padding:14px 16px; position:relative; overflow:hidden;
   }
   .op-card::before {
     content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent);
   }
-  .op-card h4 { font-size:1rem; font-weight:650; color:var(--accent); margin-bottom:8px; }
-  .op-card .row { font-size:0.8125rem; color:var(--muted); margin:3px 0; }
+  .op-card h4 { font-size:1rem; font-weight:650; color:var(--accent); margin-bottom:6px; }
+  .op-card .row { font-size:0.8125rem; color:var(--muted); margin:2px 0; }
   .op-card .row strong { color:var(--text); font-weight:500; }
+
+  .tip {
+    font-size: 0.75rem; color: var(--muted); text-align: center;
+    max-width: 280px; line-height: 1.4; margin-top: 4px;
+  }
 </style>
 </head>
 <body>
@@ -155,10 +159,15 @@
     <button id="micBtn">MIC</button>
     <div class="status" id="status">Tap mic to start</div>
     <div class="level-wrap"><div id="levelBar"></div></div>
+
+    <div class="current-sym" id="currentSym"></div>
+
     <label class="auto-correct">
       <input type="checkbox" id="autoCorrect">
       <span>Auto-correct</span>
     </label>
+
+    <p class="tip">Use a clean pure tone held close to the mic. Lower volume if the level bar never drops between dots.</p>
   </div>
 
   <div class="decoded-box" id="decoded">Waiting for signal…</div>
@@ -242,16 +251,28 @@ callItem.className = 'legend-item';
 callItem.innerHTML = `<div class="swatch c-call"></div><span><b>Callsign</b> – 5-6 char detected</span>`;
 legendEl.appendChild(callItem);
 
-/* ========== AUDIO ENGINE ========== */
+/* ========== DECODER ========== */
 let audioCtx, analyser, micStream, isListening = false;
 let rawText = '';
+
+// unitMs is the length of one Morse "dit" in milliseconds. It is learned
+// adaptively from the incoming tones, but with outlier rejection so a
+// single noise blip can't derail the whole calibration.
 let unitMs = 80;
+let unitLocked = false;
+
 let toneOn = false;
 let onStart = 0, offStart = 0;
 let currentSymbol = '';
 let lookedUp = new Set();
-let noiseFloor = 0.005;
+let noiseFloor = 0.03;
+let signalPeak = 0.3; // tracks the actual loudness of incoming tones so thresholds scale to whatever volume the source is playing at
 let peakFreq = 700;
+
+// Consecutive-frame counters used to debounce on/off transitions so a
+// single noisy animation frame can't flip state.
+let onFrames = 0, offFrames = 0;
+let pendingOnTime = 0, pendingOffTime = 0;
 
 const micBtn = document.getElementById('micBtn');
 const statusEl = document.getElementById('status');
@@ -260,6 +281,7 @@ const wpmInfo = document.getElementById('wpmInfo');
 const opCards = document.getElementById('opCards');
 const autoCb = document.getElementById('autoCorrect');
 const levelBar = document.getElementById('levelBar');
+const currentSymEl = document.getElementById('currentSym');
 
 async function startMic() {
   try {
@@ -277,19 +299,26 @@ async function startMic() {
 
     const source = audioCtx.createMediaStreamSource(micStream);
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
-    analyser.smoothingTimeConstant = 0.4;
+    analyser.fftSize = 1024;
+    analyser.smoothingTimeConstant = 0.12;
     source.connect(analyser);
 
     isListening = true;
     micBtn.classList.add('active');
     micBtn.textContent = 'STOP';
-    statusEl.textContent = 'Listening – play a tone near the mic';
+    statusEl.textContent = 'Listening – clean tone close to mic';
     statusEl.classList.add('live');
     offStart = performance.now();
+    toneOn = false;
+    currentSymbol = '';
+    onFrames = offFrames = 0;
+    pendingOnTime = pendingOffTime = 0;
+    signalPeak = 0.3;
+    unitMs = 80;
+    unitLocked = false;
     requestAnimationFrame(processAudio);
   } catch (e) {
-    statusEl.textContent = 'Microphone permission denied or unavailable';
+    statusEl.textContent = 'Microphone permission denied';
     console.error(e);
   }
 }
@@ -303,6 +332,7 @@ function stopMic() {
   statusEl.textContent = 'Stopped';
   statusEl.classList.remove('live');
   levelBar.style.width = '0%';
+  currentSymEl.textContent = '';
 }
 
 micBtn.addEventListener('click', () => {
@@ -312,86 +342,152 @@ micBtn.addEventListener('click', () => {
 function processAudio() {
   if (!isListening || !analyser) return;
 
-  const bufferLength = analyser.frequencyBinCount;
-  const data = new Uint8Array(bufferLength);
+  const data = new Uint8Array(analyser.frequencyBinCount);
   analyser.getByteFrequencyData(data);
 
   const sampleRate = audioCtx.sampleRate;
   const binSize = sampleRate / analyser.fftSize;
+  const lowBin = Math.floor(500 / binSize);
+  const highBin = Math.ceil(1000 / binSize);
 
-  // Focus on 450–1100 Hz
-  const lowBin = Math.floor(450 / binSize);
-  const highBin = Math.ceil(1100 / binSize);
-
-  let maxVal = 0;
-  let maxBin = lowBin;
+  let maxVal = 0, maxBin = lowBin, bandSum = 0, bandCount = 0;
   for (let i = lowBin; i <= highBin && i < data.length; i++) {
+    bandSum += data[i];
+    bandCount++;
     if (data[i] > maxVal) {
       maxVal = data[i];
       maxBin = i;
     }
   }
+  const bandAvg = bandCount ? bandSum / bandCount : 0;
+  // A real whistled/keyed tone shows up as a sharp spike above the rest of
+  // the band. Broadband noise (room hiss, breath, taps) lights up the whole
+  // band roughly evenly, so its peak-to-average ratio ("tonality") is low.
+  // Requiring a clear peak is what stops noise from being decoded as dits/dahs.
+  const tonality = maxVal / (bandAvg + 4);
 
-  const level = maxVal / 255;              
+  const level = maxVal / 255;
   peakFreq = maxBin * binSize;
 
-  if (level < noiseFloor * 1.8) {
-    noiseFloor = noiseFloor * 0.95 + level * 0.05;
+  if (!toneOn && level < 0.18) {
+    noiseFloor = noiseFloor * 0.9 + level * 0.1;
   }
-  const threshold = Math.max(0.08, noiseFloor * 3.5);
 
-  levelBar.style.width = Math.min(100, level * 140) + '%';
+  // Track how loud real tones actually are for this source/volume. Snap up
+  // fast when a louder tone appears; decay slowly toward a neutral baseline
+  // (not toward the current, possibly-silent, level) so it can never drift
+  // down and merge with noiseFloor — that collapse was what let ordinary
+  // room noise free-run as tone-on/off once things went quiet.
+  if (level > signalPeak) {
+    signalPeak = level;
+  } else {
+    signalPeak = signalPeak * 0.998 + 0.3 * 0.002;
+  }
+
+  // Hard floor: onThresh must always sit at least this far above noiseFloor,
+  // no matter what signalPeak does. This is what stops the threshold from
+  // ever collapsing to near-zero and triggering on background hiss.
+  const MIN_GAP = 0.14;
+  const range = Math.max(MIN_GAP, signalPeak - noiseFloor);
+  const onThresh  = noiseFloor + range * 0.35;
+  const offThresh = noiseFloor + range * 0.15;
+  const minTonality = 2.0;
+
+  levelBar.style.width = Math.min(100, level * 130) + '%';
 
   const now = performance.now();
-  const isTone = level > threshold;
+  const strongTone = level > onThresh && tonality > minTonality;
 
-  if (isTone && !toneOn) {
-
-    toneOn = true;
-    onStart = now;
-    const offDur = now - offStart;
-    handleSpace(offDur);
-  } else if (!isTone && toneOn) {
-    toneOn = false;
-    offStart = now;
-    const onDur = now - onStart;
-    handleTone(onDur);
+  if (strongTone) {
+    if (onFrames === 0) pendingOnTime = now; // remember the true onset, before confirmation lag
+    onFrames++;
+    offFrames = 0;
+  } else if (level < offThresh) {
+    if (offFrames === 0) pendingOffTime = now; // remember the true offset, before confirmation lag
+    offFrames++;
+    onFrames = 0;
+  } else {
+    onFrames = Math.max(0, onFrames - 1);
+    offFrames = Math.max(0, offFrames - 1);
   }
 
-  if (!toneOn && currentSymbol && (now - offStart) > unitMs * 7) {
+  // A fixed small confirmation window, not tied to unitMs, used only to
+  // decide whether to *trust* a transition. The timestamp itself comes from
+  // pendingOnTime/pendingOffTime (the first crossing), not this later
+  // confirmation moment - otherwise every measured element carries a fixed
+  // lag that disproportionately inflates short (fast-WPM) dits into dahs.
+  const wantOn  = onFrames  >= 2;
+  const wantOff = offFrames >= 2;
+
+  if (!toneOn && wantOn) {
+    toneOn = true;
+    onStart = pendingOnTime; // true onset time, not the later confirmation time
+    handleSpace(onStart - offStart);
+  } else if (toneOn && wantOff) {
+    toneOn = false;
+    offStart = pendingOffTime; // true offset time, not the later confirmation time
+    handleTone(offStart - onStart);
+  }
+
+  // Safety flush: if we're stuck holding a partial symbol during silence for
+  // way longer than a word gap, force it out instead of hanging forever.
+  if (!toneOn && currentSymbol && (now - offStart) > unitMs * 6) {
     flushSymbol();
     if (!rawText.endsWith(' ')) rawText += ' ';
     updateDisplay();
   }
 
-  if (isTone) {
-    statusEl.textContent = `Tone ~${Math.round(peakFreq)} Hz`;
-  }
+  currentSymEl.textContent = currentSymbol || (toneOn ? '·' : '');
+
+  if (toneOn) statusEl.textContent = `Tone ~${Math.round(peakFreq)} Hz`;
+  else if (isListening) statusEl.textContent = 'Listening…';
 
   requestAnimationFrame(processAudio);
 }
 
-function handleTone(dur) {
-  if (dur < 25) return; // ignore clicks
+// Updates the learned dit-length. First measurement seeds it directly;
+// after that, outliers (likely a misclassified noise element) are rejected
+// outright instead of being allowed to drag the average around, and the
+// smoothing is slow enough that one bad reading can't spiral the timing.
+function updateUnit(estimate) {
+  estimate = Math.max(25, Math.min(400, estimate));
+  if (unitLocked) {
+    const ratio = estimate / unitMs;
+    if (ratio < 0.45 || ratio > 2.2) return;
+    unitMs = unitMs * 0.85 + estimate * 0.15;
+  } else {
+    unitMs = unitMs * 0.5 + estimate * 0.5;
+    unitLocked = true;
+  }
+  unitMs = Math.max(28, Math.min(180, unitMs));
+}
 
-  if (dur < unitMs * 2.2) {
+function handleTone(dur) {
+  if (dur < 30) return; // too short to be a real element - click/pop, discard
+
+  const ditMax = unitMs * 2; // midpoint between a 1-unit dit and 3-unit dah
+  if (dur < ditMax) {
     currentSymbol += '.';
-    unitMs = unitMs * 0.85 + dur * 0.15;
+    updateUnit(dur);
   } else {
     currentSymbol += '-';
-    unitMs = unitMs * 0.85 + (dur / 3) * 0.15;
+    updateUnit(dur / 3);
   }
-  unitMs = Math.max(35, Math.min(220, unitMs));
   updateWpm();
+  currentSymEl.textContent = currentSymbol;
+
+  // Safety valve: a real character is never this long. If we get here,
+  // timing has drifted - flush what we have rather than let it keep growing.
+  if (currentSymbol.length >= 7) flushSymbol();
 }
 
 function handleSpace(dur) {
-  if (dur < unitMs * 1.6) {
-    // intra-character gap – ignore
-  } else if (dur < unitMs * 4.5) {
-    flushSymbol();
+  if (dur < unitMs * 1.2) return; // still inside the same character
+
+  if (dur < unitMs * 5) {
+    flushSymbol(); // character space (~3 units)
   } else {
-    flushSymbol();
+    flushSymbol(); // word space (~7 units)
     if (!rawText.endsWith(' ')) rawText += ' ';
   }
   updateDisplay();
@@ -402,9 +498,12 @@ function flushSymbol() {
   const ch = MORSE[currentSymbol] || PROSIGNS[currentSymbol] || '';
   if (ch) {
     rawText += ch;
-    updateDisplay();
+  } else if (currentSymbol.length <= 6) {
+    rawText += '[' + currentSymbol + ']';
   }
   currentSymbol = '';
+  currentSymEl.textContent = '';
+  updateDisplay();
 }
 
 function updateWpm() {
@@ -485,9 +584,12 @@ let pressTimer;
       rawText = '';
       lookedUp.clear();
       opCards.innerHTML = '';
+      currentSymbol = '';
+      unitMs = 80;
+      unitLocked = false;
       updateDisplay();
       statusEl.textContent = 'Cleared';
-    }, 750);
+    }, 700);
   });
 });
 ['touchend','mouseup','mouseleave'].forEach(ev => {
