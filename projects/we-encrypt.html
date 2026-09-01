@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We-Encrypt, Built by Professionals.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10141b;
+    --bg-panel:#171c24;
+    --text:#e7e4da;
+    --text-muted:#8b93a1;
+    --accent:#c68b3c;
+    --accent-2:#63a99a;
+    --border:#2a303b;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  header{
+    padding:28px 0;
+    border-bottom:1px solid var(--border);
+  }
+  header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .wordmark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:19px;
+    letter-spacing:0.01em;
+    color:var(--text);
+    text-decoration:none;
+  }
+  .wordmark span{color:var(--accent);}
+  header a.repo-link{
+    color:var(--text-muted);
+    text-decoration:none;
+    font-size:14px;
+    border:1px solid var(--border);
+    padding:8px 16px;
+    border-radius:3px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  header a.repo-link:hover{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+
+  .hero{
+    padding:88px 0 96px;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:44px;
+    line-height:1.15;
+    margin:0 0 22px;
+    max-width:19ch;
+  }
+  .hero p{
+    color:var(--text-muted);
+    font-size:17px;
+    max-width:42ch;
+    margin:0 0 32px;
+  }
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    padding:12px 22px;
+    border-radius:3px;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#171205;
+  }
+  .btn-secondary{
+    color:var(--text);
+    border:1px solid var(--border);
+  }
+  .btn-primary:hover{background:#d69a4e;}
+  .btn-secondary:hover{border-color:var(--text-muted);}
+
+  .code-panel{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .code-panel .bar{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 16px;
+    border-bottom:1px solid var(--border);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-muted);
+  }
+  .code-panel pre{
+    margin:0;
+    padding:20px 18px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    line-height:1.7;
+    overflow-x:auto;
+  }
+  .code-panel .plain{color:#b7c0cc;}
+  .code-panel .cipher{color:var(--accent-2);}
+  .code-divider{
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-muted);
+    padding:6px 0;
+    border-top:1px dashed var(--border);
+    border-bottom:1px dashed var(--border);
+  }
+
+  section.explain{
+    padding:8px 0 88px;
+    border-top:1px solid var(--border);
+  }
+  section.explain .inner{
+    padding-top:64px;
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:56px;
+  }
+  section.explain h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:24px;
+    margin:0;
+    max-width:14ch;
+  }
+  section.explain .body-text{
+    color:var(--text-muted);
+    font-size:16px;
+    max-width:56ch;
+  }
+  section.explain .body-text strong{color:var(--text); font-weight:500;}
+
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    border-top:1px solid var(--border);
+  }
+  .feature{
+    padding:36px 28px;
+    border-left:1px solid var(--border);
+  }
+  .feature:first-child{border-left:none;}
+  .feature h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    margin:0 0 10px;
+    color:var(--text);
+  }
+  .feature p{
+    color:var(--text-muted);
+    font-size:14.5px;
+    margin:0;
+  }
+
+  footer{
+    border-top:1px solid var(--border);
+    padding:32px 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  footer p{
+    margin:0;
+    color:var(--text-muted);
+    font-size:13.5px;
+  }
+  footer a{color:var(--text-muted);}
+  .tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tags span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-muted);
+    border:1px solid var(--border);
+    padding:4px 9px;
+    border-radius:3px;
+  }
+
+  @media (max-width: 760px){
+    .hero{grid-template-columns:1fr; padding:56px 0 64px;}
+    .hero h1{font-size:32px;}
+    section.explain .inner{grid-template-columns:1fr; padding-top:40px;}
+    .features{grid-template-columns:1fr;}
+    .feature{border-left:none; border-top:1px solid var(--border);}
+    .feature:first-child{border-top:none;}
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .code-panel .cipher{transition:opacity .4s ease;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="wordmark" href="#top">We<span> </span>Encrypt</a>
+    <a class="repo-link" href="https://github.com/noaa-apt/We-Encrypt" target="_blank" rel="noopener">Source on GitHub ↗</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero" id="top">
+    <div>
+      <h1>Lock your Python source before it leaves it into the hands of hackers.</h1>
+      <p>WeEncrypt scrambles .py files with a purpose built cipher, built from scratch, WeEncrypt has <strong>Successfully Encrypted Large Projects in 2026.</strong> </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/noaa-apt/We-Encrypt" target="_blank" rel="noopener">Get the code</a>
+      </div>
+    </div>
+
+    <div class="code-panel">
+      <div class="bar"><span>main.py</span><span>before VS after</span></div>
+      <pre class="plain">def transfer(amount, acct):
+    if verify(acct):
+        send(amount, acct)
+    return "ok"</pre>
+      <div class="code-divider">encrypted with We-Encrypt</div>
+      <pre class="cipher">7f3a::9d1c=x02b!!de81
+b6q0-hf::72kd~~a913$$m
+0v2z##19hq==de77++31lp
+9k1s%%c072--3fq1**8hv3</pre>
+    </div>
+  </section>
+</div>
+
+<section class="explain">
+  <div class="wrap inner">
+    <h2>One file. One purpose.</h2>
+    <p class="body-text">
+      We-Encrypt takes a <strong>.py</strong> file and runs it through an encryption method built specifically to keep the original source code out of the hands of hackers, and more. The result is a file that's <strong>Impossible to brute force</strong>, keeping the logic inside your scripts yours alone.
+    </p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="features">
+    <div class="feature">
+      <h3>WeEncrypt is more advanced compared to these other methods</h3>
+      <p>SHA, PGP, AES, MD5, RC4, DES, 3DES, XOR. </p>
+    </div>
+    <div class="feature">
+      <h3>WeEncrpyt is managed by a Team</h3>
+      <p>Built So Carefully, Updated The Best.</p>
+    </div>
+    <div class="feature">
+      <h3>Open source, GPL-3.0</h3>
+      <p>The full method is public and licensed under GPL-3.0. We allow anyone to inspect it, fork it, build on it.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 We-Encrypt <p> 
+    <p> Licensed under GPL-3.0 · <a href="https://github.com/noaa-apt/We-Encrypt" target="_blank" rel="noopener">github.com/noaa-apt/We-Encrypt</a></p>
+    <div class="tags">
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
